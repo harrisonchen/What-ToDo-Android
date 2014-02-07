@@ -12,10 +12,17 @@
     <string name="new_list_btn">Create new list</string>
     <string name="add_todo_btn">Add</string>
     <string name="add_todo_edit_text">You got something ToDo?</string>
-    <string name="title_activity_new_list">New List</string>
 
     <!-- New List -->
+    <string name="title_activity_new_list">New List</string>
     <string name="list_name_text_view">Name</string>
     <string name="list_name_edit_text">Groceries...?</string>
+
+    <!-- New Task -->
+    <string name="title_activity_new_task">NewTaskActivity</string>
+    <string name="task_name_text_view">I have to</string>
+    <string name="task_date">by</string>
+    <string name="task_time">at</string>
+
 
 </resources>
