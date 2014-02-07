@@ -18,12 +18,23 @@ public class DBTools extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase database) {
 
-        String query = "CREATE TABLE task(" +
+        String query = "CREATE TABLE tasks(" +
                 "taskId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT)," +
-                "status INTEGER DEFAULT 0";
+                "name TEXT," +
+                "status INTEGER DEFAULT 0)";
+
+        String query2 = "INSERT INTO tasks (name, status) VALUES ('Buy banana', 0)";
+        String query3 = "INSERT INTO tasks (name, status) VALUES ('Buy strawberry', 0)";
+        String query4 = "INSERT INTO tasks (name, status) VALUES ('Buy chocolate', 0)";
+        String query5 = "INSERT INTO tasks (name, status) VALUES ('Buy donuts', 0)";
+        String query6 = "INSERT INTO tasks (name, status) VALUES ('Go home', 0)";
 
         database.execSQL(query);
+        database.execSQL(query2);
+        database.execSQL(query3);
+        database.execSQL(query4);
+        database.execSQL(query5);
+        database.execSQL(query6);
     }
 
     public void onUpgrade(SQLiteDatabase database, int version_old, int current_version) {
@@ -43,7 +54,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         values.put("name", queryValues.get("taskName"));
 
-        database.insert("todo", null, values);
+        database.insert("tasks", null, values);
 
         database.close();
     }
@@ -56,7 +67,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         values.put("name", queryValues.get("taskName"));
 
-        return database.update("todo", values, "taskId" + " = ?",
+        return database.update("tasks", values, "taskId" + " = ?",
                                 new String[] { queryValues.get("taskId") } );
 
     }
@@ -65,7 +76,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
 
-        String deleteQuery = "DELETE FROM todo WHERE taskId='" + id + "'";
+        String deleteQuery = "DELETE FROM tasks WHERE taskId='" + id + "'";
 
         database.execSQL(deleteQuery);
 
@@ -78,7 +89,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM tasks";
+        String selectQuery = "SELECT * FROM tasks ORDER BY taskId DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 

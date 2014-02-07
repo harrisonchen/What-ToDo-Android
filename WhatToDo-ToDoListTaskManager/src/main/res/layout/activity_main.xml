@@ -30,7 +30,8 @@
         android:id="@+id/add_todo_btn"
         android:layout_alignBaseline="@+id/add_todo_edit_text"
         android:layout_alignBottom="@+id/add_todo_edit_text"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:onClick="addTodo" />
 
     <Button
         android:layout_width="wrap_content"
@@ -53,11 +54,10 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/taskListView"
         android:layout_below="@+id/my_lists_btn"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/what_todo_btn"/>
-
 
     <Button
         android:layout_width="wrap_content"
