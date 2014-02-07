@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">What ToDo - To Do List &amp; Task Manager</string>
+    <string name="app_name">What ToDo?</string>
+    <string name="app_name2">What ToDo - To Do List &amp; Task Manager</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Main Menu -->
+    <string name="what_todo_btn">What ToDo?</string>
+    <string name="my_lists_btn">My Lists</string>
+    <string name="new_list_btn">Create new list</string>
+    <string name="add_todo_btn">Add</string>
+    <string name="add_todo_edit_text">You got something ToDo?</string>
 
 </resources>
