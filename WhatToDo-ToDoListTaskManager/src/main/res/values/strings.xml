@@ -6,11 +6,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <!-- Main Menu -->
+    <!-- Main Activity -->
     <string name="what_todo_btn">What ToDo?</string>
     <string name="my_lists_btn">My Lists</string>
     <string name="new_list_btn">Create new list</string>
     <string name="add_todo_btn">Add</string>
     <string name="add_todo_edit_text">You got something ToDo?</string>
+    <string name="title_activity_new_list">New List</string>
+
+    <!-- New List -->
+    <string name="list_name_text_view">Name</string>
+    <string name="list_name_edit_text">Groceries...?</string>
 
 </resources>
