@@ -18,18 +18,28 @@ public class DBTools extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase database) {
 
-        String query = "CREATE TABLE tasks(" +
-                "taskId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT," +
-                "status INTEGER DEFAULT 0)";
+        String taskCreateQuery = "CREATE TABLE list(list_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "category TEXT NOT NULL, status INTEGER DEFAULT 0)";
 
-        String query2 = "INSERT INTO tasks (name, status) VALUES ('Buy banana', 0)";
-        String query3 = "INSERT INTO tasks (name, status) VALUES ('Buy strawberry', 0)";
-        String query4 = "INSERT INTO tasks (name, status) VALUES ('Buy chocolate', 0)";
-        String query5 = "INSERT INTO tasks (name, status) VALUES ('Buy donuts', 0)";
-        String query6 = "INSERT INTO tasks (name, status) VALUES ('Go home', 0)";
+        String listCreateQuery = "CREATE TABLE task(task_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "list_id INTEGER DEFAULT -1, name TEXT, status INTEGER DEFAULT 0," +
+                "FOREIGN KEY (list_id) REFERENCES list (list_id))";
 
-        database.execSQL(query);
+        String query7 = "INSERT INTO list(category) VALUES ('Groceries')";
+        String query8 = "INSERT INTO list(category) VALUES ('Chores')";
+        String query9 = "INSERT INTO list(category) VALUES ('Bucket List')";
+
+        String query2 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
+        String query3 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
+        String query4 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
+        String query5 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
+        String query6 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
+
+        database.execSQL(taskCreateQuery);
+        database.execSQL(listCreateQuery);
+        database.execSQL(query7);
+        database.execSQL(query8);
+        database.execSQL(query9);
         database.execSQL(query2);
         database.execSQL(query3);
         database.execSQL(query4);
@@ -54,7 +64,21 @@ public class DBTools extends SQLiteOpenHelper {
 
         values.put("name", queryValues.get("taskName"));
 
-        database.insert("tasks", null, values);
+        database.insert("task", null, values);
+
+        database.close();
+    }
+
+    public void addTaskWithList(HashMap<String, String> queryValues) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("name", queryValues.get("taskName"));
+        values.put("list_id", queryValues.get("list_id"));
+
+        database.insert("task", null, values);
 
         database.close();
     }
@@ -68,8 +92,8 @@ public class DBTools extends SQLiteOpenHelper {
         values.put("name", queryValues.get("taskName"));
         values.put("status", queryValues.get("status"));
 
-        return database.update("tasks", values, "taskId" + " = ?",
-                new String[] { queryValues.get("taskId") } );
+        return database.update("task", values, "task_id" + " = ?",
+                new String[] { queryValues.get("task_id") } );
 
     }
 
@@ -77,7 +101,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
 
-        String deleteQuery = "DELETE FROM tasks WHERE taskId='" + id + "'";
+        String deleteQuery = "DELETE FROM task WHERE task_id='" + id + "'";
 
         database.execSQL(deleteQuery);
 
@@ -90,7 +114,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM tasks ORDER BY taskId DESC";
+        String selectQuery = "SELECT * FROM task ORDER BY task_id DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -102,9 +126,9 @@ public class DBTools extends SQLiteOpenHelper {
 
                 HashMap<String, String> taskMap = new HashMap<String, String>();
 
-                taskMap.put("taskId", cursor.getString(0));
-                taskMap.put("name", cursor.getString(1));
-                taskMap.put("status", cursor.getString(2));
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
 
                 taskArrayList.add(taskMap);
             } while (cursor.moveToNext());
@@ -121,7 +145,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM tasks where taskId='" + id + "'";
+        String selectQuery = "SELECT * FROM task where task_id='" + id + "'";
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
@@ -129,9 +153,9 @@ public class DBTools extends SQLiteOpenHelper {
 
             do {
 
-                taskMap.put("taskId", cursor.getString(0));
-                taskMap.put("name", cursor.getString(1));
-                taskMap.put("status", cursor.getString(2));
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
             } while (cursor.moveToNext());
         }
 
@@ -155,7 +179,7 @@ public class DBTools extends SQLiteOpenHelper {
             max = max + 1;
         }
         else {
-            max = 0;
+            max = 1;
         }
 
         database.close();
@@ -168,7 +192,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "SELECT status FROM tasks WHERE taskId='" + id + "'";
+        String selectQuery = "SELECT status FROM task WHERE task_id='" + id + "'";
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
@@ -184,6 +208,64 @@ public class DBTools extends SQLiteOpenHelper {
 
         return taskId;
 
+    }
+
+    /* LIST TABLE */
+
+    public void addList(HashMap<String, String> queryValues) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("category", queryValues.get("category"));
+
+        database.insert("list", null, values);
+
+        database.close();
+    }
+
+    public void deleteList(String id) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String deleteQuery = "DELETE FROM list WHERE list.list_id='" + id + "'";
+        String deleteTaskQuery = "DELETE FROM task WHERE task.list_id='" + id + "'";
+
+        database.execSQL(deleteTaskQuery);
+        database.execSQL(deleteQuery);
+
+        database.close();
+    }
+
+    public ArrayList<HashMap<String, String>> getAllLists() {
+
+        ArrayList<HashMap<String, String>> listArrayList;
+
+        listArrayList = new ArrayList<HashMap<String, String>>();
+
+        String selectQuery = "SELECT * FROM list ORDER BY list_id DESC";
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+
+                HashMap<String, String> listMap = new HashMap<String, String>();
+
+                listMap.put("list_id", cursor.getString(0));
+                listMap.put("category", cursor.getString(1));
+
+                listArrayList.add(listMap);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return listArrayList;
     }
 
 }

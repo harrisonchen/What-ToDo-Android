@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
 
         ListView listView = (ListView) findViewById(R.id.taskListView);
 
-        String[] from = new String[] { "taskId", "name" };
+        String[] from = new String[] { "task_id", "name" };
         final int[] to = { R.id.taskId, R.id.taskName };
 
         final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
 
                 for (HashMap<String, String> map : taskList) {
 
-                    if (map.get("taskId").equals(taskIdValue)) {
+                    if (map.get("task_id").equals(taskIdValue)) {
 
                         taskList.remove(map);
                         break;
@@ -135,16 +135,16 @@ public class MainActivity extends ActionBarActivity {
 
                     taskMap.put("taskName", taskName);
 
-                    dbtools.addTask(taskMap);
-
                     add_todo_edit_text.setText("");
 
                     HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("taskId", dbtools.getNextMaxID("tasks"));
+                    map.put("task_id", dbtools.getNextMaxID("task"));
                     map.put("name", taskName);
                     map.put("status", "0");
 
                     taskList.add(0, map);
+
+                    dbtools.addTask(taskMap);
 
                     adapter.notifyDataSetChanged();
                     view.setAlpha(1);
