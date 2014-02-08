@@ -39,6 +39,10 @@
             android:name="com.studentglue.whattodotodolisttaskmanager.ListActivity"
             android:label="@string/title_activity_list" >
         </activity>
+        <activity
+            android:name="com.studentglue.whattodotodolisttaskmanager.WhatToDoActivity"
+            android:label="@string/title_activity_what_to_do" >
+        </activity>
     </application>
 
 </manifest>

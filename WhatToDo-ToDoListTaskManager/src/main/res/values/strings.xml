@@ -31,5 +31,10 @@
     <string name="title_activity_my_list">MyListActivity</string>
     <string name="title_activity_main_list">ListActivity</string>
     <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_what_to_do">WhatToDoActivity</string>
+
+    <!-- What To Do -->
+    <string name="maybe_later_btn">Maybe later</string>
+    <string name="you_should_text_view">You should</string>
 
 </resources>

@@ -34,6 +34,8 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+    Button what_todo_btn;
+
     TextView taskId;
     TextView taskName;
 
@@ -51,12 +53,23 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setupUI(findViewById(R.id.container));
 
+        what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
+
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
         //add_todo_btn.setTag(1);
         my_list_btn = (Button) findViewById(R.id.my_lists_btn);
         //my_list_btn.setTag(2);
 
         taskList = dbtools.getAllTasks();
+
+        what_todo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
+                startActivity(whatToDoIntent);
+            }
+        });
 
         my_list_btn.setOnClickListener(new View.OnClickListener() {
 

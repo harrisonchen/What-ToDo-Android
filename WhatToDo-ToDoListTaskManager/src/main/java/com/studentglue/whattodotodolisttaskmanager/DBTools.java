@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class DBTools extends SQLiteOpenHelper {
 
@@ -162,6 +163,58 @@ public class DBTools extends SQLiteOpenHelper {
         database.close();
 
         return taskMap;
+    }
+
+    public HashMap<String, String> getRandomTask(String prevTask) {
+
+        HashMap<String, String> taskMap = new HashMap<String, String>();
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM task where status=0";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        Random rand = new Random();
+
+        int randomTaskPosition;
+
+        if (getIncompleteTaskCount() > 1) {
+
+            do {
+                randomTaskPosition = rand.nextInt(cursor.getCount());
+
+                cursor.moveToPosition(randomTaskPosition);
+
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
+            } while(cursor.getString(2).equals(prevTask));
+        }
+        else {
+
+            cursor.moveToFirst();
+
+            taskMap.put("task_id", cursor.getString(0));
+            taskMap.put("name", cursor.getString(2));
+            taskMap.put("status", cursor.getString(3));
+        }
+
+        database.close();
+
+        return taskMap;
+    }
+
+    public int getIncompleteTaskCount() {
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM task where status=0";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        return cursor.getCount();
+
     }
 
     public String getNextMaxID(String table) {
