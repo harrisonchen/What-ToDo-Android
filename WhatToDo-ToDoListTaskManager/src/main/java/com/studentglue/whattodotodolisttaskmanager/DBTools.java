@@ -135,4 +135,26 @@ public class DBTools extends SQLiteOpenHelper {
         return taskMap;
     }
 
+    public String getNextMaxID() {
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM SQLITE_SEQUENCE WHERE name='tasks'";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        int max;
+
+        if (cursor.moveToFirst()) {
+            max = Integer.parseInt(cursor.getString(1));
+            max = max + 1;
+        }
+        else {
+            max = 0;
+        }
+
+        return String.valueOf(max);
+
+    }
+
 }
