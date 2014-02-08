@@ -34,7 +34,6 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
-    Intent intent;
     TextView taskId;
     TextView taskName;
 
@@ -70,124 +69,89 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        if(taskList.size() != 0) {
+        ListView listView = (ListView) findViewById(R.id.taskListView);
 
-            ListView listView = (ListView) findViewById(R.id.taskListView);
+        String[] from = new String[] { "taskId", "name" };
+        final int[] to = { R.id.taskId, R.id.taskName };
 
-            String[] from = new String[] { "taskId", "name" };
-            int[] to = { R.id.taskId, R.id.taskName };
+        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                from, to);
+        listView.setAdapter(adapter);
 
-            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
-                    from, to);
-            listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
 
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                taskId = (TextView) view.findViewById(R.id.taskId);
+                taskName = (TextView) view.findViewById(R.id.taskName);
 
-                    taskId = (TextView) findViewById(R.id.taskId);
-                    taskName = (TextView) findViewById(R.id.taskName);
+                final String taskIdValue = taskId.getText().toString();
+                final String taskNameValue = taskName.getText().toString();
 
-                    final String taskIdValue = taskId.getText().toString();
-                    final String taskNameValue = taskName.getText().toString();
+                dbtools.deleteTask(taskIdValue);
 
-                    dbtools.deleteTask(taskIdValue);
+                for (HashMap<String, String> map : taskList) {
 
-                    for (HashMap<String, String> map : taskList) {
+                    if (map.get("taskId").equals(taskIdValue)) {
 
-                        if (map.get("taskId").equals(taskIdValue)) {
-
-                            taskList.remove(map);
-                            break;
-                        }
+                        taskList.remove(map);
+                        break;
                     }
+                }
 
-                    /*HashMap<String, String> taskMap = new HashMap<String, String>();
+                /*HashMap<String, String> taskMap = new HashMap<String, String>();
 
-                    taskMap.put("taskId", taskIdValue);
-                    taskMap.put("name", taskNameValue);
-                    String taskStatus = dbtools.getTaskStatus(taskIdValue);
-                    if (taskStatus.equals("0")) {
-                        taskMap.put("status", "1");
-                        //taskName.setPaintFlags(taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    }
-                    else {
-                        taskMap.put("status", "0");
-                        //taskName.setPaintFlags( taskName.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                    }
+                taskMap.put("taskId", taskIdValue);
+                taskMap.put("name", taskNameValue);
+                String taskStatus = dbtools.getTaskStatus(taskIdValue);
+                if (taskStatus.equals("0")) {
+                    taskMap.put("status", "1");
+                    taskName.setPaintFlags(taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                else {
+                    taskMap.put("status", "0");
+                    taskName.setPaintFlags( taskName.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                }
 
-                    dbtools.updateTask(taskMap);*/
+                dbtools.updateTask(taskMap);*/
+
+                adapter.notifyDataSetChanged();
+                view.setAlpha(1);
+
+            }
+        });
+
+        add_todo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
+
+                String taskName = add_todo_edit_text.getText().toString();
+
+                if(!taskName.equals("")) {
+                    HashMap<String, String> taskMap = new HashMap<String, String>();
+
+                    taskMap.put("taskName", taskName);
+
+                    dbtools.addTask(taskMap);
+
+                    add_todo_edit_text.setText("");
+
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("taskId", dbtools.getNextMaxID("tasks"));
+                    map.put("name", taskName);
+                    map.put("status", "0");
+
+                    taskList.add(0, map);
 
                     adapter.notifyDataSetChanged();
                     view.setAlpha(1);
 
                 }
-            });
-
-            add_todo_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-
-                    add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
-
-                    String taskName = add_todo_edit_text.getText().toString();
-
-                    if(!taskName.equals("")) {
-                        HashMap<String, String> taskMap = new HashMap<String, String>();
-
-                        taskMap.put("taskName", taskName);
-
-                        dbtools.addTask(taskMap);
-
-                        add_todo_edit_text.setText("");
-
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("taskId", dbtools.getNextMaxID("tasks"));
-                        map.put("name", taskName);
-                        map.put("status", "0");
-
-                        taskList.add(0, map);
-
-                        adapter.notifyDataSetChanged();
-                        view.setAlpha(1);
-
-                    }
-                }
-            });
-
-        }
-        else {
-
-            add_todo_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
-
-                    String taskName = add_todo_edit_text.getText().toString();
-
-                    if(!taskName.equals("")) {
-                        HashMap<String, String> taskMap = new HashMap<String, String>();
-
-                        taskMap.put("taskName", taskName);
-
-                        dbtools.addTask(taskMap);
-
-                        add_todo_edit_text.setText("");
-
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("taskId", dbtools.getNextMaxID("tasks"));
-                        map.put("name", taskName);
-                        map.put("status", "0");
-
-                        taskList.add(0, map);
-
-                    }
-                }
-            });
-
-        }
+            }
+        });
 
         /*if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -270,7 +234,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
