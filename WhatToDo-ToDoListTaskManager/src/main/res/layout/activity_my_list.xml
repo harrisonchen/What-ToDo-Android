@@ -16,58 +16,25 @@
         android:layout_height="0dp"
         android:layout_centerInParent="true"/>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000"
+        android:background="@drawable/my_list_title"
         android:textColor="#FFF"
+        android:textStyle="bold"
         android:padding="8dp"
-        android:id="@+id/add_todo_edit_text"
-        android:hint="@string/add_todo_edit_text"
+        android:gravity="center"
+        android:id="@+id/my_list_text_view"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/my_list_text_view"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/add_todo_btn" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/add_button_custom"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:text="@string/add_todo_btn"
-        android:id="@+id/add_todo_btn"
-        android:layout_alignBaseline="@+id/add_todo_edit_text"
-        android:layout_alignBottom="@+id/add_todo_edit_text"
-        android:layout_alignParentRight="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/what_todo_button_custom"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:text="@string/my_lists_btn"
-        android:id="@+id/my_lists_btn"
-        android:layout_alignRight="@id/fakeView"
-        android:layout_below="@+id/add_todo_edit_text"
-        android:layout_alignParentLeft="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/what_todo_button_custom"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:text="@string/new_list_btn"
-        android:id="@+id/new_list_btn"
-        android:layout_alignLeft="@id/fakeView"
-        android:layout_below="@+id/add_todo_btn"
-        android:layout_alignParentRight="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/taskListView"
-        android:layout_below="@+id/my_lists_btn"
+        android:layout_below="@+id/my_list_text_view"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/what_todo_btn"/>
 

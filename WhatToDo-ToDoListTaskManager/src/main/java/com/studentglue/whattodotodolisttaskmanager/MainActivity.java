@@ -3,10 +3,12 @@ package com.studentglue.whattodotodolisttaskmanager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,9 +36,11 @@ public class MainActivity extends ActionBarActivity {
 
     Intent intent;
     TextView taskId;
+    TextView taskName;
 
     EditText add_todo_edit_text;
     Button add_todo_btn;
+    Button my_list_btn;
 
     ArrayList<HashMap<String, String>> taskList;
 
@@ -49,15 +53,29 @@ public class MainActivity extends ActionBarActivity {
         setupUI(findViewById(R.id.container));
 
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        //add_todo_btn.setTag(1);
+        my_list_btn = (Button) findViewById(R.id.my_lists_btn);
+        //my_list_btn.setTag(2);
 
         taskList = dbtools.getAllTasks();
+
+        my_list_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent myListIntent = new Intent(getApplication(), MyListActivity.class);;
+
+                startActivity(myListIntent);
+            }
+        });
 
         if(taskList.size() != 0) {
 
             ListView listView = (ListView) findViewById(R.id.taskListView);
 
             String[] from = new String[] { "taskId", "name" };
-            final int[] to = { R.id.taskId, R.id.taskName };
+            int[] to = { R.id.taskId, R.id.taskName };
 
             final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
                     from, to);
@@ -66,21 +84,40 @@ public class MainActivity extends ActionBarActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
-                    taskId = (TextView) view.findViewById(R.id.taskId);
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    taskId = (TextView) findViewById(R.id.taskId);
+                    taskName = (TextView) findViewById(R.id.taskName);
 
                     final String taskIdValue = taskId.getText().toString();
+                    final String taskNameValue = taskName.getText().toString();
 
                     dbtools.deleteTask(taskIdValue);
 
                     for (HashMap<String, String> map : taskList) {
 
-                        if (map.get("taskId") == taskId.getText()) {
+                        if (map.get("taskId").equals(taskIdValue)) {
 
                             taskList.remove(map);
                             break;
                         }
                     }
+
+                    /*HashMap<String, String> taskMap = new HashMap<String, String>();
+
+                    taskMap.put("taskId", taskIdValue);
+                    taskMap.put("name", taskNameValue);
+                    String taskStatus = dbtools.getTaskStatus(taskIdValue);
+                    if (taskStatus.equals("0")) {
+                        taskMap.put("status", "1");
+                        //taskName.setPaintFlags(taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
+                    else {
+                        taskMap.put("status", "0");
+                        //taskName.setPaintFlags( taskName.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                    }
+
+                    dbtools.updateTask(taskMap);*/
 
                     adapter.notifyDataSetChanged();
                     view.setAlpha(1);
@@ -106,7 +143,7 @@ public class MainActivity extends ActionBarActivity {
                         add_todo_edit_text.setText("");
 
                         HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("taskId", dbtools.getNextMaxID());
+                        map.put("taskId", dbtools.getNextMaxID("tasks"));
                         map.put("name", taskName);
                         map.put("status", "0");
 
@@ -140,7 +177,7 @@ public class MainActivity extends ActionBarActivity {
                         add_todo_edit_text.setText("");
 
                         HashMap<String, String> map = new HashMap<String, String>();
-                        map.put("taskId", dbtools.getNextMaxID());
+                        map.put("taskId", dbtools.getNextMaxID("tasks"));
                         map.put("name", taskName);
                         map.put("status", "0");
 
@@ -242,7 +279,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up what_todo_button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:

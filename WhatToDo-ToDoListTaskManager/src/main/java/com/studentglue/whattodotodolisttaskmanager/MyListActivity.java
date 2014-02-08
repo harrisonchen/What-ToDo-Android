@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class NewListActivity extends ActionBarActivity {
+public class MyListActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_list);
+        setContentView(R.layout.activity_my_list);
 
         /*if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -30,7 +30,7 @@ public class NewListActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.new_list, menu);
+        getMenuInflater().inflate(R.menu.my_list, menu);
         return true;
     }
 
@@ -57,7 +57,7 @@ public class NewListActivity extends ActionBarActivity {
         /*@Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_new_list, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_my_list, container, false);
             return rootView;
         }*/
     }

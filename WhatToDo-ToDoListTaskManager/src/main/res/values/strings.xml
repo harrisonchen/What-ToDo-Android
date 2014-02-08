@@ -13,6 +13,9 @@
     <string name="add_todo_btn">Add</string>
     <string name="add_todo_edit_text">You got something ToDo?</string>
 
+    <!-- My List Activity -->
+    <string name="my_list_text_view">ToDo Lists</string>
+
     <!-- New List -->
     <string name="title_activity_new_list">New List</string>
     <string name="list_name_text_view">Name</string>
@@ -23,6 +26,6 @@
     <string name="task_name_text_view">I have to</string>
     <string name="task_date">by</string>
     <string name="task_time">at</string>
-
+    <string name="title_activity_my_list">MyListActivity</string>
 
 </resources>

@@ -66,6 +66,7 @@ public class DBTools extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put("name", queryValues.get("taskName"));
+        values.put("status", queryValues.get("status"));
 
         return database.update("tasks", values, "taskId" + " = ?",
                                 new String[] { queryValues.get("taskId") } );
@@ -109,6 +110,8 @@ public class DBTools extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
+        database.close();
+
         return taskArrayList;
     }
 
@@ -118,7 +121,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM contacts where taskId='" + id + "'";
+        String selectQuery = "SELECT * FROM tasks where taskId='" + id + "'";
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
@@ -132,14 +135,16 @@ public class DBTools extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
+        database.close();
+
         return taskMap;
     }
 
-    public String getNextMaxID() {
+    public String getNextMaxID(String table) {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM SQLITE_SEQUENCE WHERE name='tasks'";
+        String selectQuery = "SELECT * FROM SQLITE_SEQUENCE WHERE name='" + table + "'";
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
@@ -153,7 +158,31 @@ public class DBTools extends SQLiteOpenHelper {
             max = 0;
         }
 
+        database.close();
+
         return String.valueOf(max);
+
+    }
+
+    public String getTaskStatus(String id) {
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT status FROM tasks WHERE taskId='" + id + "'";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        String taskId = "";
+
+        if (cursor.moveToFirst()) {
+
+            taskId = cursor.getString(0);
+
+        }
+
+        database.close();
+
+        return taskId;
 
     }
 
