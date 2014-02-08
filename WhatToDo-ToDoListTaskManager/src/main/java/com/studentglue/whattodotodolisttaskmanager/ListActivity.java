@@ -17,45 +17,54 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyListActivity extends ActionBarActivity {
+public class ListActivity extends ActionBarActivity {
 
-    //public final static String EXTRA_LIST_ID = "";
-    //public final static String EXTRA_LIST_NAME = "";
+    TextView taskId;
+    TextView taskName;
+    TextView task_text_view;
 
-    TextView listId;
-    TextView listName;
+    Button add_todo_btn;
+    EditText add_todo_edit_text;
 
-    Button add_list_btn;
-    EditText add_list_edit_text;
-
-    ArrayList<HashMap<String, String>> myList;
+    ArrayList<HashMap<String, String>> taskList;
 
     DBTools dbtools = new DBTools(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_list);
-        setupUI(findViewById(R.id.containerMyList));
+        setContentView(R.layout.activity_list);
+        setupUI(findViewById(R.id.containerTaskList));
 
-        add_list_btn = (Button) findViewById(R.id.add_list_btn);
-        add_list_edit_text = (EditText) findViewById(R.id.add_list_edit_text);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        final String list_id = extras.getString("EXTRA_LIST_ID");
+        String list_name = extras.getString("EXTRA_LIST_NAME");
 
-        myList = dbtools.getAllLists();
+        task_text_view = (TextView) findViewById(R.id.task_text_view);
 
-        ListView listView = (ListView) findViewById(R.id.myListView);
+        task_text_view.setText(list_name);
 
-        String[] from = new String[] { "list_id", "category" };
-        final int[] to = { R.id.listId, R.id.listName };
+        add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
 
-        final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
+        taskList = dbtools.getAllTaskFromList(list_id);
+
+        ListView listView = (ListView) findViewById(R.id.taskListView);
+
+        String[] from = new String[] { "task_id", "name" };
+        final int[] to = { R.id.taskId, R.id.taskName };
+
+        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
                 from, to);
         listView.setAdapter(adapter);
 
@@ -64,56 +73,52 @@ public class MyListActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
 
-                listId = (TextView) view.findViewById(R.id.listId);
-                listName = (TextView) view.findViewById(R.id.listName);
+                taskId = (TextView) view.findViewById(R.id.taskId);
+                taskName = (TextView) view.findViewById(R.id.taskName);
 
-                final String listIdValue = listId.getText().toString();
-                final String listNameValue = listName.getText().toString();
+                final String taskIdValue = taskId.getText().toString();
+                final String taskNameValue = taskName.getText().toString();
 
-                /*dbtools.deleteList(listIdValue);
+                dbtools.deleteTask(taskIdValue);
 
-                for (HashMap<String, String> map : myList) {
+                for (HashMap<String, String> map : taskList) {
 
-                    if (map.get("list_id").equals(listIdValue)) {
+                    if (map.get("task_id").equals(taskIdValue)) {
 
-                        myList.remove(map);
+                        taskList.remove(map);
                         break;
                     }
                 }
 
                 adapter.notifyDataSetChanged();
-                view.setAlpha(1);*/
-
-                Intent listIntent = new Intent(getApplication(), ListActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("EXTRA_LIST_ID", listIdValue);
-                extras.putString("EXTRA_LIST_NAME", listNameValue);
-                listIntent.putExtras(extras);
-                startActivity(listIntent);
+                view.setAlpha(1);
 
             }
         });
 
-        add_list_btn.setOnClickListener(new View.OnClickListener() {
+        add_todo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
-                String listName = add_list_edit_text.getText().toString();
+                String taskName = add_todo_edit_text.getText().toString();
 
-                if(!listName.equals("")) {
-                    HashMap<String, String> listMap = new HashMap<String, String>();
+                if(!taskName.equals("")) {
+                    HashMap<String, String> taskMap = new HashMap<String, String>();
 
-                    listMap.put("category", listName);
+                    taskMap.put("taskName", taskName);
+                    taskMap.put("list_id", list_id);
 
-                    add_list_edit_text.setText("");
+                    add_todo_edit_text.setText("");
 
                     HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("list_id", dbtools.getNextMaxID("list"));
-                    map.put("category", listName);
+                    map.put("task_id", dbtools.getNextMaxID("task"));
+                    map.put("name", taskName);
+                    map.put("status", "0");
+                    map.put("list_id", list_id);
 
-                    myList.add(0, map);
+                    taskList.add(0, map);
 
-                    dbtools.addList(listMap);
+                    dbtools.addTaskWithList(taskMap);
 
                     adapter.notifyDataSetChanged();
                     view.setAlpha(1);
@@ -142,7 +147,7 @@ public class MyListActivity extends ActionBarActivity {
             view.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(MyListActivity.this);
+                    hideSoftKeyboard(ListActivity.this);
                     return false;
                 }
 
@@ -165,14 +170,14 @@ public class MyListActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my_list, menu);
+        getMenuInflater().inflate(R.menu.list, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up what_todo_button, so long
+        // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
@@ -192,7 +197,7 @@ public class MyListActivity extends ActionBarActivity {
         /*@Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_my_list, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_list, container, false);
             return rootView;
         }*/
     }

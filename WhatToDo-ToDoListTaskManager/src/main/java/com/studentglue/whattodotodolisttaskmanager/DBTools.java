@@ -268,4 +268,36 @@ public class DBTools extends SQLiteOpenHelper {
         return listArrayList;
     }
 
+    public ArrayList<HashMap<String, String>> getAllTaskFromList(String list_id) {
+
+        ArrayList<HashMap<String, String>> taskArrayList;
+
+        taskArrayList = new ArrayList<HashMap<String, String>>();
+
+        String selectQuery = "SELECT * FROM task WHERE task.list_id='" +
+                list_id + "' ORDER BY task_id DESC";
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+
+                HashMap<String, String> taskMap = new HashMap<String, String>();
+
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
+
+                taskArrayList.add(taskMap);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return taskArrayList;
+    }
+
 }

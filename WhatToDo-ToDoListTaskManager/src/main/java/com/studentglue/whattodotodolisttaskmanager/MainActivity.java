@@ -134,6 +134,7 @@ public class MainActivity extends ActionBarActivity {
                     HashMap<String, String> taskMap = new HashMap<String, String>();
 
                     taskMap.put("taskName", taskName);
+                    taskMap.put("list_id", "-1");
 
                     add_todo_edit_text.setText("");
 
