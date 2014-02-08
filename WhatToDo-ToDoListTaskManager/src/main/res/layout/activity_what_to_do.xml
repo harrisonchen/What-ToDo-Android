@@ -44,7 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="italic"
         android:textSize="40sp"
         android:gravity="center"
         android:id="@+id/todo_text_view"

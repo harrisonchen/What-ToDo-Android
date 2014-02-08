@@ -29,6 +29,8 @@ public class MyListActivity extends ActionBarActivity {
     //public final static String EXTRA_LIST_ID = "";
     //public final static String EXTRA_LIST_NAME = "";
 
+    Button what_todo_btn;
+
     TextView listId;
     TextView listName;
 
@@ -43,7 +45,9 @@ public class MyListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_list);
-        setupUI(findViewById(R.id.containerMyList));
+        setupUI(findViewById(R.id.container));
+
+        what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
         add_list_btn = (Button) findViewById(R.id.add_list_btn);
         add_list_edit_text = (EditText) findViewById(R.id.add_list_edit_text);
@@ -58,6 +62,15 @@ public class MyListActivity extends ActionBarActivity {
         final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
                 from, to);
         listView.setAdapter(adapter);
+
+        what_todo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
+                startActivity(whatToDoIntent);
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

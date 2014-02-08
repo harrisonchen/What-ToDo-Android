@@ -28,6 +28,8 @@ import java.util.HashMap;
 
 public class ListActivity extends ActionBarActivity {
 
+    Button what_todo_btn;
+
     TextView taskId;
     TextView taskName;
     TextView task_text_view;
@@ -43,7 +45,9 @@ public class ListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        setupUI(findViewById(R.id.containerTaskList));
+        setupUI(findViewById(R.id.container));
+
+        what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -67,6 +71,15 @@ public class ListActivity extends ActionBarActivity {
         final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
                 from, to);
         listView.setAdapter(adapter);
+
+        what_todo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
+                startActivity(whatToDoIntent);
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
