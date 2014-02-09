@@ -22,6 +22,9 @@
         android:background="#000"
         android:textColor="#FFF"
         android:padding="8dp"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:id="@+id/add_todo_edit_text"
         android:hint="@string/add_todo_edit_text"
         android:layout_alignParentTop="true"
@@ -84,14 +87,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="speakButtonClicked"
         android:id="@+id/speak_btn"
-        android:text="Speak"
-        android:background="@drawable/red_white_center"
+        android:background="@drawable/stt_mic"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_above="@+id/my_lists_btn" />

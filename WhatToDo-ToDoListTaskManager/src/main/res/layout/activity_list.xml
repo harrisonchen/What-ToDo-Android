@@ -20,7 +20,8 @@
         android:id="@+id/add_todo_edit_text"
         android:hint="@string/add_todo_edit_text"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/add_todo_btn" />
+        android:layout_toLeftOf="@+id/add_todo_btn"
+        android:layout_toRightOf="@+id/speak_btn" />
 
     <Button
         android:layout_width="wrap_content"
@@ -70,5 +71,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
+
+    <ImageButton
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="speakButtonClicked"
+        android:id="@+id/speak_btn"
+        android:background="@drawable/stt_mic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/add_todo_edit_text" />
 
 </RelativeLayout>

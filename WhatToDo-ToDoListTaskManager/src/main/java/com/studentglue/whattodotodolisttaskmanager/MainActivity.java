@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -38,7 +39,6 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
-    private ListView wordsList;
 
     Button what_todo_btn;
 
@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setupUI(findViewById(R.id.container));
 
-        Button speakButton = (Button) findViewById(R.id.speak_btn);
+        ImageButton speakButton = (ImageButton) findViewById(R.id.speak_btn);
 
         // Disable button if no recognition service is present
         PackageManager pm = getPackageManager();
@@ -68,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
         if (activities.size() == 0)
         {
             speakButton.setEnabled(false);
-            speakButton.setText("Recognizer not present");
+            //speakButton.setText("Recognizer not present");
         }
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
@@ -122,14 +122,26 @@ public class MainActivity extends ActionBarActivity {
 
                 dbtools.deleteTask(taskIdValue);
 
-                for (HashMap<String, String> map : taskList) {
+                view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
 
-                    if (map.get("task_id").equals(taskIdValue)) {
+                    public void run() {
 
-                        taskList.remove(map);
-                        break;
+                        for (HashMap<String, String> map : taskList) {
+
+                            if (map.get("task_id").equals(taskIdValue)) {
+
+                                taskList.remove(map);
+                                break;
+                            }
+                        }
+
+                        adapter.notifyDataSetChanged();
+                        view.setAlpha(1);
                     }
-                }
+                });
+
+
+
 
                 /*HashMap<String, String> taskMap = new HashMap<String, String>();
 
@@ -147,8 +159,7 @@ public class MainActivity extends ActionBarActivity {
 
                 dbtools.updateTask(taskMap);*/
 
-                adapter.notifyDataSetChanged();
-                view.setAlpha(1);
+
 
             }
         });

@@ -20,12 +20,4 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="?android:attr/buttonStyleSmall"
-        android:focusable="false"
-        android:text="@string/delete_list_btn"
-        android:id="@+id/delete_list_btn" />
-
 </TableRow>

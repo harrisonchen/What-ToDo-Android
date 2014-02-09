@@ -2,6 +2,9 @@ package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,8 +29,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ListActivity extends ActionBarActivity {
+
+    private static final int REQUEST_CODE = 1234;
 
     Button what_todo_btn;
 
@@ -46,6 +53,18 @@ public class ListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         setupUI(findViewById(R.id.container));
+
+        ImageButton speakButton = (ImageButton) findViewById(R.id.speak_btn);
+
+        // Disable button if no recognition service is present
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0)
+        {
+            speakButton.setEnabled(false);
+            //speakButton.setText("Recognizer not present");
+        }
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
@@ -94,17 +113,23 @@ public class ListActivity extends ActionBarActivity {
 
                 dbtools.deleteTask(taskIdValue);
 
-                for (HashMap<String, String> map : taskList) {
+                view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
 
-                    if (map.get("task_id").equals(taskIdValue)) {
+                    public void run() {
 
-                        taskList.remove(map);
-                        break;
+                        for (HashMap<String, String> map : taskList) {
+
+                            if (map.get("task_id").equals(taskIdValue)) {
+
+                                taskList.remove(map);
+                                break;
+                            }
+                        }
+
+                        adapter.notifyDataSetChanged();
+                        view.setAlpha(1);
                     }
-                }
-
-                adapter.notifyDataSetChanged();
-                view.setAlpha(1);
+                });
 
             }
         });
@@ -145,6 +170,50 @@ public class ListActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    /**
+     * Handle the action of the button being clicked
+     */
+    public void speakButtonClicked(View v)
+    {
+        startVoiceRecognitionActivity();
+    }
+
+    /**
+     * Fire an intent to start the voice recognition activity.
+     */
+    private void startVoiceRecognitionActivity()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now");
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    /**
+     * Handle the results from the voice recognition activity.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            if (data != null) {
+                // Populate the wordsList with the String values the recognition engine thought it heard
+                ArrayList<String> matches = data.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS);
+
+                String textInput;
+                textInput = matches.get(0);
+
+                add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
+                add_todo_edit_text.setText(textInput);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public static void hideSoftKeyboard(Activity activity) {
