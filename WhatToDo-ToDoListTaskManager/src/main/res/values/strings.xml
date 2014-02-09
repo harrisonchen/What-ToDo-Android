@@ -11,17 +11,21 @@
     <string name="my_lists_btn">My Lists</string>
     <string name="new_list_btn">Create new list</string>
     <string name="add_todo_btn">Add</string>
-    <string name="add_todo_edit_text">You got something ToDo?</string>
+    <string name="add_todo_edit_text">Got something ToDo?</string>
 
     <!-- My List Activity -->
     <string name="my_list_text_view">ToDo Lists</string>
     <string name="add_list_edit_text">New Category</string>
     <string name="add_list_btn">Add</string>
+    <string name="delete_list_btn">delete</string>
 
     <!-- New List -->
     <string name="title_activity_new_list">New List</string>
     <string name="list_name_text_view">Name</string>
     <string name="list_name_edit_text">Groceries...?</string>
+
+    <!-- Tasks -->
+    <string name="delete_task_btn">delete</string>
 
     <!-- New Task -->
     <string name="title_activity_new_task">NewTaskActivity</string>
@@ -36,5 +40,8 @@
     <!-- What To Do -->
     <string name="maybe_later_btn">Maybe later</string>
     <string name="you_should_text_view">You should</string>
+
+    <string name="recent_tasks_btn">Recent</string>
+    <string name="important_tasks_btn">Important</string>
 
 </resources>

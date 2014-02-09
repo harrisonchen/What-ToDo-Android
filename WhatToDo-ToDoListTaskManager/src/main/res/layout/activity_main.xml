@@ -25,7 +25,8 @@
         android:id="@+id/add_todo_edit_text"
         android:hint="@string/add_todo_edit_text"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/add_todo_btn" />
+        android:layout_toLeftOf="@+id/add_todo_btn"
+        android:layout_toRightOf="@+id/speak_btn" />
 
     <Button
         android:layout_width="wrap_content"
@@ -57,7 +58,7 @@
         android:background="@drawable/what_todo_button_custom"
         android:textColor="#FFF"
         android:textStyle="bold"
-        android:text="@string/new_list_btn"
+        android:text="@string/important_tasks_btn"
         android:id="@+id/new_list_btn"
         android:layout_alignLeft="@id/fakeView"
         android:layout_below="@+id/add_todo_btn"
@@ -82,5 +83,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="speakButtonClicked"
+        android:id="@+id/speak_btn"
+        android:text="Speak"
+        android:background="@drawable/red_white_center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/my_lists_btn" />
 
 </RelativeLayout>

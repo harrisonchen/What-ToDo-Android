@@ -34,6 +34,8 @@ public class MyListActivity extends ActionBarActivity {
     TextView listId;
     TextView listName;
 
+    Button delete_list_btn;
+
     Button add_list_btn;
     EditText add_list_edit_text;
 
@@ -48,6 +50,8 @@ public class MyListActivity extends ActionBarActivity {
         setupUI(findViewById(R.id.container));
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
+
+        delete_list_btn = (Button) findViewById(R.id.delete_list_btn);
 
         add_list_btn = (Button) findViewById(R.id.add_list_btn);
         add_list_edit_text = (EditText) findViewById(R.id.add_list_edit_text);

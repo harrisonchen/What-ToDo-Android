@@ -3,7 +3,10 @@ package com.studentglue.whattodotodolisttaskmanager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Paint;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -34,6 +37,9 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+    private static final int REQUEST_CODE = 1234;
+    private ListView wordsList;
+
     Button what_todo_btn;
 
     TextView taskId;
@@ -52,6 +58,18 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI(findViewById(R.id.container));
+
+        Button speakButton = (Button) findViewById(R.id.speak_btn);
+
+        // Disable button if no recognition service is present
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0)
+        {
+            speakButton.setEnabled(false);
+            speakButton.setText("Recognizer not present");
+        }
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
@@ -172,6 +190,50 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    /**
+     * Handle the action of the button being clicked
+     */
+    public void speakButtonClicked(View v)
+    {
+        startVoiceRecognitionActivity();
+    }
+
+    /**
+     * Fire an intent to start the voice recognition activity.
+     */
+    private void startVoiceRecognitionActivity()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now");
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    /**
+     * Handle the results from the voice recognition activity.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            if (data != null) {
+                // Populate the wordsList with the String values the recognition engine thought it heard
+                ArrayList<String> matches = data.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS);
+
+                String textInput;
+                textInput = matches.get(0);
+
+                add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
+                add_todo_edit_text.setText(textInput);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
