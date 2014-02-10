@@ -49,6 +49,8 @@ public class MainActivity extends ActionBarActivity {
     Button add_todo_btn;
     Button my_list_btn;
 
+    Button important_tasks_btn;
+
     ArrayList<HashMap<String, String>> taskList;
 
     DBTools dbtools = new DBTools(this);
@@ -73,6 +75,8 @@ public class MainActivity extends ActionBarActivity {
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
+        important_tasks_btn= (Button) findViewById(R.id.important_tasks_btn);
+
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
         //add_todo_btn.setTag(1);
         my_list_btn = (Button) findViewById(R.id.my_lists_btn);
@@ -86,6 +90,16 @@ public class MainActivity extends ActionBarActivity {
 
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
                 startActivity(whatToDoIntent);
+            }
+        });
+
+        important_tasks_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent importantIntent = new Intent(getApplication(), ImportantListActivity.class);
+                startActivity(importantIntent);
             }
         });
 

@@ -32,16 +32,16 @@
     <string name="task_name_text_view">I have to</string>
     <string name="task_date">by</string>
     <string name="task_time">at</string>
-    <string name="title_activity_my_list">MyListActivity</string>
+    <string name="title_activity_my_list">My List</string>
     <string name="title_activity_main_list">ListActivity</string>
-    <string name="title_activity_list">ListActivity</string>
-    <string name="title_activity_what_to_do">WhatToDoActivity</string>
+    <string name="title_activity_list">ToDo List</string>
+    <string name="title_activity_what_to_do">What ToDo?</string>
 
     <!-- What To Do -->
     <string name="maybe_later_btn">Maybe later</string>
     <string name="you_should_text_view">You should</string>
-
     <string name="recent_tasks_btn">Recent</string>
     <string name="important_tasks_btn">Important</string>
+    <string name="title_activity_important_task">Important</string>
 
 </resources>

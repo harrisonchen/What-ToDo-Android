@@ -35,6 +35,8 @@ public class MyListActivity extends ActionBarActivity {
 
     Button what_todo_btn;
 
+    Button important_tasks_btn;
+
     TextView listId;
     TextView listName;
 
@@ -67,6 +69,8 @@ public class MyListActivity extends ActionBarActivity {
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
+        important_tasks_btn = (Button) findViewById(R.id.important_tasks_btn);
+
         add_list_btn = (Button) findViewById(R.id.add_list_btn);
         add_list_edit_text = (EditText) findViewById(R.id.add_list_edit_text);
 
@@ -87,6 +91,16 @@ public class MyListActivity extends ActionBarActivity {
 
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
                 startActivity(whatToDoIntent);
+            }
+        });
+
+        important_tasks_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent importantIntent = new Intent(getApplication(), ImportantListActivity.class);
+                startActivity(importantIntent);
             }
         });
 

@@ -33,15 +33,23 @@
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.MyListActivity"
-            android:label="@string/title_activity_my_list" >
+            android:label="@string/title_activity_my_list"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.ListActivity"
-            android:label="@string/title_activity_list" >
+            android:label="@string/title_activity_list"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.WhatToDoActivity"
-            android:label="@string/title_activity_what_to_do" >
+            android:label="@string/title_activity_what_to_do"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".ImportantListActivity"
+            android:label="@string/title_activity_important_task"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
     </application>
 

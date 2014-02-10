@@ -19,11 +19,12 @@ public class DBTools extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase database) {
 
-        String taskCreateQuery = "CREATE TABLE list(list_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+        String listCreateQuery = "CREATE TABLE list(list_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "category TEXT NOT NULL, status INTEGER DEFAULT 0)";
 
-        String listCreateQuery = "CREATE TABLE task(task_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "list_id INTEGER DEFAULT -1, name TEXT, status INTEGER DEFAULT 0," +
+        String taskCreateQuery = "CREATE TABLE task(task_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "list_id INTEGER DEFAULT -1, name TEXT, status INTEGER DEFAULT 0, " +
+                "importance INTEGER DEFAULT 0, " +
                 "FOREIGN KEY (list_id) REFERENCES list (list_id))";
 
         String query7 = "INSERT INTO list(category) VALUES ('Groceries')";
@@ -130,6 +131,36 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
+
+                taskArrayList.add(taskMap);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return taskArrayList;
+    }
+
+    public ArrayList<HashMap<String, String>> getAllImportantTasks() {
+
+        ArrayList<HashMap<String, String>> taskArrayList = new ArrayList<HashMap<String, String>>();
+
+        String selectQuery = "SELECT * FROM task WHERE importance > 0 ORDER BY importance DESC";
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+
+                HashMap<String, String> taskMap = new HashMap<String, String>();
+
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
+                taskMap.put("importance", cursor.getString(4));
 
                 taskArrayList.add(taskMap);
             } while (cursor.moveToNext());
