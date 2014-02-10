@@ -37,13 +37,13 @@ public class ImportantListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_important_list);
-        setupUI(findViewById(R.id.container));
+        //setupUI(findViewById(R.id.container));
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
         taskList = dbtools.getAllImportantTasks();
 
-        ListView listView = (ListView) findViewById(R.id.taskListView);
+        ListView listView = (ListView) findViewById(R.id.importantTasksList);
 
         String[] from = new String[] { "task_id", "name" };
         final int[] to = { R.id.taskId, R.id.taskName };
@@ -141,7 +141,7 @@ public class ImportantListActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.important_task, menu);
+        getMenuInflater().inflate(R.menu.important_list, menu);
         return true;
     }
 

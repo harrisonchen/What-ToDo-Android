@@ -47,7 +47,7 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".ImportantListActivity"
+            android:name="com.studentglue.whattodotodolisttaskmanager.ImportantListActivity"
             android:label="@string/title_activity_important_task"
             android:windowSoftInputMode="stateHidden" >
         </activity>
