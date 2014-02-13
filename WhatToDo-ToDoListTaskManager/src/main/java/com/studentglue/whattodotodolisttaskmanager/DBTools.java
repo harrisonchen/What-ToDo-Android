@@ -244,7 +244,12 @@ public class DBTools extends SQLiteOpenHelper {
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
-        return cursor.getCount();
+        int count = cursor.getCount();
+
+        cursor.close();
+        //database.close();
+
+        return count;
 
     }
 

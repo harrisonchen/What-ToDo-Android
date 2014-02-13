@@ -26,11 +26,14 @@ public class WhatToDoActivity extends ActionBarActivity {
     TextView todo_text_view;
 
     DBTools dbtools = new DBTools(this);
+    int incompleteTaskCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_what_to_do);
+
+        incompleteTaskCount = dbtools.getIncompleteTaskCount();
 
         maybe_later_btn = (Button) findViewById(R.id.maybe_later_btn);
 
@@ -38,7 +41,7 @@ public class WhatToDoActivity extends ActionBarActivity {
 
         HashMap<String, String> random_task = new HashMap<String, String>();
 
-        if (dbtools.getIncompleteTaskCount() > 0) {
+        if (incompleteTaskCount > 0) {
             random_task = dbtools.getRandomTask(prevTask);
             todo_text_view.setText(random_task.get("name"));
             prevTask = random_task.get("name");
@@ -54,15 +57,13 @@ public class WhatToDoActivity extends ActionBarActivity {
 
                 HashMap<String, String> random_task = new HashMap<String, String>();
 
-                int incompleteTaskCount = dbtools.getIncompleteTaskCount();
-
                 if (incompleteTaskCount > 1) {
                     random_task = dbtools.getRandomTask(prevTask);
                     todo_text_view.setText(random_task.get("name"));
                     prevTask = random_task.get("name");
                 }
-                else if (incompleteTaskCount < 1) {
-                    todo_text_view.setText("do something...");
+                else if (incompleteTaskCount <= 1) {
+                    finish();
                 }
             }
         });
