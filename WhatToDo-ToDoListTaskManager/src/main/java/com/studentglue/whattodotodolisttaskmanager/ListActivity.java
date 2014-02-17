@@ -34,6 +34,7 @@ import java.util.List;
 public class ListActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
+    private static final int UPDATE_LISTVIEW = 2;
 
     Button what_todo_btn;
 
@@ -111,25 +112,13 @@ public class ListActivity extends ActionBarActivity {
                 final String taskIdValue = taskId.getText().toString();
                 final String taskNameValue = taskName.getText().toString();
 
-                dbtools.deleteTask(taskIdValue);
-
-                view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
-
-                    public void run() {
-
-                        for (HashMap<String, String> map : taskList) {
-
-                            if (map.get("task_id").equals(taskIdValue)) {
-
-                                taskList.remove(map);
-                                break;
-                            }
-                        }
-
-                        adapter.notifyDataSetChanged();
-                        view.setAlpha(1);
-                    }
-                });
+                Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_TASK_ID", taskIdValue);
+                extras.putString("EXTRA_TASK_NAME", taskNameValue);
+                extras.putString("EXTRA_TASK_IMPORTANCE", dbtools.getTaskImportance(taskIdValue));
+                taskIntent.putExtras(extras);
+                startActivityForResult(taskIntent, UPDATE_LISTVIEW);
 
             }
         });
@@ -151,7 +140,6 @@ public class ListActivity extends ActionBarActivity {
                     HashMap<String, String> map = new HashMap<String, String>();
                     map.put("task_id", dbtools.getNextMaxID("task"));
                     map.put("name", taskName);
-                    map.put("status", "0");
                     map.put("list_id", list_id);
 
                     taskList.add(0, map);
@@ -211,6 +199,20 @@ public class ListActivity extends ActionBarActivity {
                 add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
                 add_todo_edit_text.setText(textInput);
             }
+        }
+        else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
+
+            taskList = dbtools.getAllTasks();
+            ListView listView = (ListView) findViewById(R.id.taskListView);
+
+            String[] from = new String[] { "task_id", "name" };
+            final int[] to = { R.id.taskId, R.id.taskName };
+
+            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                    from, to);
+            listView.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
 

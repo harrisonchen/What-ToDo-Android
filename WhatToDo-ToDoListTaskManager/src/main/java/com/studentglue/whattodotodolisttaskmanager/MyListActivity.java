@@ -174,6 +174,14 @@ public class MyListActivity extends ActionBarActivity {
         }*/
     }
 
+    @Override
+    public void onBackPressed() {
+
+        setResult(RESULT_OK);
+
+        super.onBackPressed();
+    }
+
     /**
      * Handle the action of the button being clicked
      */

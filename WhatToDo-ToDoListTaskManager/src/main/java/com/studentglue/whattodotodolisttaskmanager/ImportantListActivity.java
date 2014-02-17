@@ -23,6 +23,8 @@ import java.util.HashMap;
 
 public class ImportantListActivity extends ActionBarActivity {
 
+    private static final int UPDATE_LISTVIEW = 2;
+
     Button what_todo_btn;
 
     TextView taskId;
@@ -72,25 +74,13 @@ public class ImportantListActivity extends ActionBarActivity {
                 final String taskIdValue = taskId.getText().toString();
                 final String taskNameValue = taskName.getText().toString();
 
-                dbtools.deleteTask(taskIdValue);
-
-                view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
-
-                    public void run() {
-
-                        for (HashMap<String, String> map : taskList) {
-
-                            if (map.get("task_id").equals(taskIdValue)) {
-
-                                taskList.remove(map);
-                                break;
-                            }
-                        }
-
-                        adapter.notifyDataSetChanged();
-                        view.setAlpha(1);
-                    }
-                });
+                Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_TASK_ID", taskIdValue);
+                extras.putString("EXTRA_TASK_NAME", taskNameValue);
+                extras.putString("EXTRA_TASK_IMPORTANCE", dbtools.getTaskImportance(taskIdValue));
+                taskIntent.putExtras(extras);
+                startActivityForResult(taskIntent, UPDATE_LISTVIEW);
 
             }
         });
@@ -102,6 +92,35 @@ public class ImportantListActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        setResult(RESULT_OK);
+
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
+
+            taskList = dbtools.getAllImportantTasks();
+            ListView listView = (ListView) findViewById(R.id.importantTasksList);
+
+            String[] from = new String[] { "task_id", "name" };
+            final int[] to = { R.id.taskId, R.id.taskName };
+
+            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                    from, to);
+            listView.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public static void hideSoftKeyboard(Activity activity) {

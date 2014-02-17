@@ -40,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
     private static final int UPDATE_LISTVIEW = 2;
+    private static final int GO_TO_MY_LIST = 3;
+    private static final int GO_TO_IMPORTANT_LIST = 4;
 
     Button what_todo_btn;
 
@@ -98,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View view) {
 
                 Intent importantIntent = new Intent(getApplication(), ImportantListActivity.class);
-                startActivity(importantIntent);
+                startActivityForResult(importantIntent, GO_TO_IMPORTANT_LIST);
             }
         });
 
@@ -109,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
 
                 Intent myListIntent = new Intent(getApplication(), MyListActivity.class);;
 
-                startActivity(myListIntent);
+                startActivityForResult(myListIntent, GO_TO_MY_LIST);
             }
         });
 
@@ -266,6 +268,34 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
+
+            taskList = dbtools.getAllTasks();
+            ListView listView = (ListView) findViewById(R.id.taskListView);
+
+            String[] from = new String[] { "task_id", "name" };
+            final int[] to = { R.id.taskId, R.id.taskName };
+
+            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                    from, to);
+            listView.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
+        }
+        else if (requestCode == GO_TO_MY_LIST && resultCode == RESULT_OK) {
+
+            taskList = dbtools.getAllTasks();
+            ListView listView = (ListView) findViewById(R.id.taskListView);
+
+            String[] from = new String[] { "task_id", "name" };
+            final int[] to = { R.id.taskId, R.id.taskName };
+
+            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                    from, to);
+            listView.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
+        }
+        else if (requestCode == GO_TO_IMPORTANT_LIST && resultCode == RESULT_OK) {
 
             taskList = dbtools.getAllTasks();
             ListView listView = (ListView) findViewById(R.id.taskListView);
