@@ -92,6 +92,7 @@ public class DBTools extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put("name", queryValues.get("taskName"));
+        values.put("importance", queryValues.get("importance"));
 
         return database.update("task", values, "task_id" + " = ?",
                 new String[] { queryValues.get("task_id") } );
@@ -115,7 +116,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM task ORDER BY task_id DESC";
+        String selectQuery = "SELECT * FROM task ORDER BY importance DESC, task_id DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -176,7 +177,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM task where task_id='" + id + "'";
+        String selectQuery = "SELECT * FROM task WHERE task_id='" + id + "'";
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
@@ -193,6 +194,26 @@ public class DBTools extends SQLiteOpenHelper {
         database.close();
 
         return taskMap;
+    }
+
+    public String getTaskImportance(String id) {
+
+        String importance = "0";
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT importance FROM task WHERE task_id=" + id;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+
+            importance = cursor.getString(0);
+        }
+
+        database.close();
+
+        return importance;
     }
 
     public HashMap<String, String> getRandomTask(String prevTask) {

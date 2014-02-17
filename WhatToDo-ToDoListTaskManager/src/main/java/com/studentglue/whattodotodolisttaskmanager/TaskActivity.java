@@ -24,6 +24,7 @@ public class TaskActivity extends ActionBarActivity {
     Bundle extras;
     String task_id;
     String task_name;
+    String task_importance;
 
     EditText task_edittext;
     TextView level_of_importance_textview;
@@ -45,16 +46,18 @@ public class TaskActivity extends ActionBarActivity {
         extras = intent.getExtras();
         task_id = extras.getString("EXTRA_TASK_ID");
         task_name = extras.getString("EXTRA_TASK_NAME");
+        task_importance = extras.getString("EXTRA_TASK_IMPORTANCE");
 
         task_edittext = (EditText) findViewById(R.id.task_edittext);
         level_of_importance_textview = (TextView) findViewById(R.id.level_of_importance_textview);
+        level_of_importance_textview.setText(task_importance);
         level_of_importance_seekbar = (SeekBar) findViewById(R.id.level_of_importance_seekbar);
         level_of_importance_seekbar.setOnSeekBarChangeListener(levelOfImportanceSeekBarListener);
+        level_of_importance_seekbar.setProgress(Integer.parseInt(task_importance));
         update_task_btn = (Button) findViewById(R.id.update_task_btn);
         delete_task_btn = (Button) findViewById(R.id.delete_task_btn);
 
         task_edittext.setText(task_name);
-        level_of_importance_textview.setText("0");
 
         update_task_btn.setOnClickListener(new View.OnClickListener() {
 
@@ -67,6 +70,7 @@ public class TaskActivity extends ActionBarActivity {
 
                 taskMap.put("task_id", task_id);
                 taskMap.put("taskName", taskName);
+                taskMap.put("importance", String.valueOf(level_of_importance_seekbar.getProgress()));
 
                 dbtools.updateTask(taskMap);
 
