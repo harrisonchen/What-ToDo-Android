@@ -39,6 +39,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
+    private static final int UPDATE_LISTVIEW = 2;
 
     Button what_todo_btn;
 
@@ -78,9 +79,7 @@ public class MainActivity extends ActionBarActivity {
         important_tasks_btn= (Button) findViewById(R.id.important_tasks_btn);
 
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
-        //add_todo_btn.setTag(1);
         my_list_btn = (Button) findViewById(R.id.my_lists_btn);
-        //my_list_btn.setTag(2);
 
         taskList = dbtools.getAllTasks();
 
@@ -134,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
                 final String taskIdValue = taskId.getText().toString();
                 final String taskNameValue = taskName.getText().toString();
 
-                dbtools.deleteTask(taskIdValue);
+                /*dbtools.deleteTask(taskIdValue);
 
                 view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
 
@@ -152,7 +151,15 @@ public class MainActivity extends ActionBarActivity {
                         adapter.notifyDataSetChanged();
                         view.setAlpha(1);
                     }
-                });
+                });*/
+
+
+                Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_TASK_ID", taskIdValue);
+                extras.putString("EXTRA_TASK_NAME", taskNameValue);
+                taskIntent.putExtras(extras);
+                startActivityForResult(taskIntent, UPDATE_LISTVIEW);
 
 
 
@@ -256,6 +263,20 @@ public class MainActivity extends ActionBarActivity {
                 add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
                 add_todo_edit_text.setText(textInput);
             }
+        }
+        else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
+
+            taskList = dbtools.getAllTasks();
+            ListView listView = (ListView) findViewById(R.id.taskListView);
+
+            String[] from = new String[] { "task_id", "name" };
+            final int[] to = { R.id.taskId, R.id.taskName };
+
+            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                    from, to);
+            listView.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
 

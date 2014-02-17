@@ -25,7 +25,11 @@
     <string name="list_name_edit_text">Groceries...?</string>
 
     <!-- Tasks -->
-    <string name="delete_task_btn">delete</string>
+    <string name="task_textview">Task</string>
+    <string name="reminder_textview">Reminder:</string>
+    <string name="update_task_btn">Update</string>
+    <string name="delete_task_btn">Delete</string>
+    <string name="level_of_importance_textview">Importance:</string>
 
     <!-- New Task -->
     <string name="title_activity_new_task">NewTaskActivity</string>
@@ -43,5 +47,6 @@
     <string name="recent_tasks_btn">Recent</string>
     <string name="important_tasks_btn">Important</string>
     <string name="title_activity_important_task">Important</string>
+    <string name="title_activity_task">TaskActivity</string>
 
 </resources>

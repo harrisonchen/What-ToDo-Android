@@ -92,7 +92,6 @@ public class DBTools extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put("name", queryValues.get("taskName"));
-        values.put("status", queryValues.get("status"));
 
         return database.update("task", values, "task_id" + " = ?",
                 new String[] { queryValues.get("task_id") } );
