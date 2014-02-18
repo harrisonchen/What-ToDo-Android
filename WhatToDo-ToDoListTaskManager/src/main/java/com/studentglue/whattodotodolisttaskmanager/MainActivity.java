@@ -115,9 +115,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        ListView listView = (ListView) findViewById(R.id.taskListView);
+        final ListView listView = (ListView) findViewById(R.id.taskListView);
 
-        String[] from = new String[] { "task_id", "name" };
+        final String[] from = new String[] { "task_id", "name" };
         final int[] to = { R.id.taskId, R.id.taskName };
 
         final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
@@ -209,12 +209,13 @@ public class MainActivity extends ActionBarActivity {
                     map.put("name", taskName);
                     map.put("status", "0");
 
-                    taskList.add(0, map);
+                    //taskList.add(0, map);
 
                     dbtools.addTask(taskMap);
 
-                    adapter.notifyDataSetChanged();
-                    view.setAlpha(1);
+                    taskList = dbtools.getAllTasks();
+
+                    setAdapter();
 
                 }
             }
@@ -225,6 +226,20 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    public void setAdapter() {
+        taskList = dbtools.getAllTasks();
+        ListView listView = (ListView) findViewById(R.id.taskListView);
+
+        String[] from = new String[] { "task_id", "name" };
+        final int[] to = { R.id.taskId, R.id.taskName };
+
+        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                from, to);
+        listView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -310,40 +325,6 @@ public class MainActivity extends ActionBarActivity {
             adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
-
-    }
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-    }
-
-    public void addTodo(View view) {
-
-        EditText add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
-
-        String taskName = add_todo_edit_text.getText().toString();
-
-        if(!taskName.equals("")) {
-            HashMap<String, String> taskMap = new HashMap<String, String>();
-
-            taskMap.put("taskName", taskName);
-
-            dbtools.addTask(taskMap);
-
-            add_todo_edit_text.setText("");
-
-            this.callMainActivity(view);
-
-        }
 
     }
 

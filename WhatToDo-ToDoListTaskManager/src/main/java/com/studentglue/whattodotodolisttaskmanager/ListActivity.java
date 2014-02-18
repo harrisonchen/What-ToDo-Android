@@ -142,12 +142,13 @@ public class ListActivity extends ActionBarActivity {
                     map.put("name", taskName);
                     map.put("list_id", list_id);
 
-                    taskList.add(0, map);
+                    //taskList.add(0, map);
 
                     dbtools.addTaskWithList(taskMap);
 
-                    adapter.notifyDataSetChanged();
-                    view.setAlpha(1);
+                    taskList = dbtools.getAllTasks();
+
+                    setAdapter();
 
                 }
             }
@@ -158,6 +159,20 @@ public class ListActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    public void setAdapter() {
+        taskList = dbtools.getAllTasks();
+        ListView listView = (ListView) findViewById(R.id.taskListView);
+
+        String[] from = new String[] { "task_id", "name" };
+        final int[] to = { R.id.taskId, R.id.taskName };
+
+        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
+                from, to);
+        listView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
     }
 
     /**
