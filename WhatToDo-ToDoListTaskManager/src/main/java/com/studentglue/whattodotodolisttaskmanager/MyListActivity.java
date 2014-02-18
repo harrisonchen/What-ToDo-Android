@@ -161,8 +161,9 @@ public class MyListActivity extends ActionBarActivity {
 
                     dbtools.addList(listMap);
 
-                    adapter.notifyDataSetChanged();
-                    view.setAlpha(1);
+                    myList = dbtools.getAllLists();
+
+                    setAdapter();
 
                 }
             }
@@ -173,6 +174,19 @@ public class MyListActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
+    }
+
+    public void setAdapter() {
+        ListView listView = (ListView) findViewById(R.id.myListView);
+
+        String[] from = new String[] { "list_id", "category" };
+        final int[] to = { R.id.listId, R.id.listName };
+
+        final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
+                from, to);
+        listView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -145,7 +145,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         ArrayList<HashMap<String, String>> taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM task WHERE importance > 0 ORDER BY importance DESC";
+        String selectQuery = "SELECT * FROM task WHERE importance > 0 ORDER BY importance DESC, task_id DESC";
 
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -384,7 +384,7 @@ public class DBTools extends SQLiteOpenHelper {
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
         String selectQuery = "SELECT * FROM task WHERE task.list_id='" +
-                list_id + "' ORDER BY task_id DESC";
+                list_id + "' ORDER BY importance DESC, task_id DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 

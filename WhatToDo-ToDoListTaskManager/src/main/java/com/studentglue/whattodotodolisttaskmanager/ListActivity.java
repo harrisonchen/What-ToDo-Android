@@ -50,6 +50,9 @@ public class ListActivity extends ActionBarActivity {
 
     DBTools dbtools = new DBTools(this);
 
+    String list_id;
+    String list_name;
+
 
 
     @Override
@@ -74,8 +77,8 @@ public class ListActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        final String list_id = extras.getString("EXTRA_LIST_ID");
-        String list_name = extras.getString("EXTRA_LIST_NAME");
+        list_id = extras.getString("EXTRA_LIST_ID");
+        list_name = extras.getString("EXTRA_LIST_NAME");
 
         task_text_view = (TextView) findViewById(R.id.task_text_view);
 
@@ -150,7 +153,7 @@ public class ListActivity extends ActionBarActivity {
 
                     dbtools.addTaskWithList(taskMap);
 
-                    taskList = dbtools.getAllTasks();
+                    taskList = dbtools.getAllTaskFromList(list_id);
 
                     setAdapter();
 
@@ -177,7 +180,6 @@ public class ListActivity extends ActionBarActivity {
     }
 
     public void setAdapter() {
-        taskList = dbtools.getAllTasks();
         ListView listView = (ListView) findViewById(R.id.taskListView);
 
         String[] from = new String[] { "task_id", "name" };
@@ -232,7 +234,7 @@ public class ListActivity extends ActionBarActivity {
         }
         else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
 
-            taskList = dbtools.getAllTasks();
+            taskList = dbtools.getAllTaskFromList(list_id);
             ListView listView = (ListView) findViewById(R.id.taskListView);
 
             String[] from = new String[] { "task_id", "name" };

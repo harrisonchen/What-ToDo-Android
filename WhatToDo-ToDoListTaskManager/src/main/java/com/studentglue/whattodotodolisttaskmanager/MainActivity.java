@@ -229,7 +229,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void setAdapter() {
-        taskList = dbtools.getAllTasks();
         ListView listView = (ListView) findViewById(R.id.taskListView);
 
         String[] from = new String[] { "task_id", "name" };
