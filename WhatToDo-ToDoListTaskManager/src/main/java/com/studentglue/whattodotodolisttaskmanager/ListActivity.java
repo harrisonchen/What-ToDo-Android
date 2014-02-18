@@ -1,6 +1,8 @@
 package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -165,10 +167,24 @@ public class ListActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                dbtools.deleteList(list_id);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
+                builder.setMessage(R.string.delete_list_message);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        dbtools.deleteList(list_id);
 
-                setResult(Activity.RESULT_OK);
-                finish();
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

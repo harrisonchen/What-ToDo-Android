@@ -18,6 +18,7 @@
     <string name="add_list_edit_text">New Category</string>
     <string name="add_list_btn">Add</string>
     <string name="delete_list_btn">delete</string>
+    <string name="delete_list_message">Are you sure?</string>
 
     <!-- New List -->
     <string name="title_activity_new_list">New List</string>
@@ -48,5 +49,10 @@
     <string name="important_tasks_btn">Important</string>
     <string name="title_activity_important_task">Important</string>
     <string name="title_activity_task">TaskActivity</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>
