@@ -32,6 +32,7 @@ import java.util.List;
 public class MyListActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
+    private static final int GO_TO_LIST = 5;
 
     Button what_todo_btn;
 
@@ -134,7 +135,7 @@ public class MyListActivity extends ActionBarActivity {
                 extras.putString("EXTRA_LIST_ID", listIdValue);
                 extras.putString("EXTRA_LIST_NAME", listNameValue);
                 listIntent.putExtras(extras);
-                startActivity(listIntent);
+                startActivityForResult(listIntent, GO_TO_LIST);
 
             }
         });
@@ -221,6 +222,20 @@ public class MyListActivity extends ActionBarActivity {
                 add_list_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
                 add_list_edit_text.setText(textInput);
             }
+        }
+        else if (requestCode == GO_TO_LIST && resultCode == RESULT_OK) {
+
+            myList = dbtools.getAllLists();
+            ListView listView = (ListView) findViewById(R.id.myListView);
+
+            String[] from = new String[] { "list_id", "category" };
+            final int[] to = { R.id.listId, R.id.listName };
+
+            final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
+                    from, to);
+            listView.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
 

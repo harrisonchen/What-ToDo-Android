@@ -43,11 +43,14 @@ public class ListActivity extends ActionBarActivity {
     TextView task_text_view;
 
     Button add_todo_btn;
+    Button delete_list_btn;
     EditText add_todo_edit_text;
 
     ArrayList<HashMap<String, String>> taskList;
 
     DBTools dbtools = new DBTools(this);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class ListActivity extends ActionBarActivity {
         task_text_view.setText(list_name);
 
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        delete_list_btn = (Button) findViewById(R.id.delete_list_btn);
         add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
 
         taskList = dbtools.getAllTaskFromList(list_id);
@@ -151,6 +155,17 @@ public class ListActivity extends ActionBarActivity {
                     setAdapter();
 
                 }
+            }
+        });
+
+        delete_list_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dbtools.deleteList(list_id);
+
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         });
 
