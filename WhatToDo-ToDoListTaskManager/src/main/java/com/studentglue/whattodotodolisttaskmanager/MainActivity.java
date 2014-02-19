@@ -55,6 +55,8 @@ public class MainActivity extends ActionBarActivity {
     Button important_tasks_btn;
 
     ArrayList<HashMap<String, String>> taskList;
+    ListView listView;
+    TaskEntryAdapter customAdapter;
 
     DBTools dbtools = new DBTools(this);
 
@@ -115,14 +117,16 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        final ListView listView = (ListView) findViewById(R.id.taskListView);
+        listView = (ListView) findViewById(R.id.taskListView);
 
         final String[] from = new String[] { "task_id", "name" };
         final int[] to = { R.id.taskId, R.id.taskName };
 
         final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
                 from, to);
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
+        customAdapter = new TaskEntryAdapter(this);
+        listView.setAdapter(customAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -135,55 +139,16 @@ public class MainActivity extends ActionBarActivity {
                 final String taskIdValue = taskId.getText().toString();
                 final String taskNameValue = taskName.getText().toString();
 
-                /*dbtools.deleteTask(taskIdValue);
+                dbtools.toggleTaskComplete(taskIdValue, dbtools.getTaskStatus(taskIdValue));
+                setAdapter();
 
-                view.animate().setDuration(1000).alpha(0).withEndAction(new Runnable() {
-
-                    public void run() {
-
-                        for (HashMap<String, String> map : taskList) {
-
-                            if (map.get("task_id").equals(taskIdValue)) {
-
-                                taskList.remove(map);
-                                break;
-                            }
-                        }
-
-                        adapter.notifyDataSetChanged();
-                        view.setAlpha(1);
-                    }
-                });*/
-
-
-                Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
+                /*Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TASK_ID", taskIdValue);
                 extras.putString("EXTRA_TASK_NAME", taskNameValue);
                 extras.putString("EXTRA_TASK_IMPORTANCE", dbtools.getTaskImportance(taskIdValue));
                 taskIntent.putExtras(extras);
-                startActivityForResult(taskIntent, UPDATE_LISTVIEW);
-
-
-
-
-                /*HashMap<String, String> taskMap = new HashMap<String, String>();
-
-                taskMap.put("taskId", taskIdValue);
-                taskMap.put("name", taskNameValue);
-                String taskStatus = dbtools.getTaskStatus(taskIdValue);
-                if (taskStatus.equals("0")) {
-                    taskMap.put("status", "1");
-                    taskName.setPaintFlags(taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                else {
-                    taskMap.put("status", "0");
-                    taskName.setPaintFlags( taskName.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                }
-
-                dbtools.updateTask(taskMap);*/
-
-
+                startActivityForResult(taskIntent, UPDATE_LISTVIEW);*/
 
             }
         });
@@ -229,7 +194,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void setAdapter() {
-        ListView listView = (ListView) findViewById(R.id.taskListView);
+        /*ListView listView = (ListView) findViewById(R.id.taskListView);
 
         String[] from = new String[] { "task_id", "name" };
         final int[] to = { R.id.taskId, R.id.taskName };
@@ -238,7 +203,11 @@ public class MainActivity extends ActionBarActivity {
                 from, to);
         listView.setAdapter(adapter);
 
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
+
+        customAdapter = new TaskEntryAdapter(this);
+        listView.setAdapter(customAdapter);
+        customAdapter.notifyDataSetChanged();
     }
 
     /**

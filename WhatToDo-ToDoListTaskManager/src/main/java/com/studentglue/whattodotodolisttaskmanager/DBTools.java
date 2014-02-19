@@ -99,6 +99,34 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
+    public int completeTask(String id) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("status", "1");
+
+        return database.update("task", values, "task_id" + " = ?",
+                new String[] { id } );
+    }
+
+    public int toggleTaskComplete(String id, String status) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        if(status.equals("1")) {
+            values.put("status", "0");
+        }
+        else {
+            values.put("status", "1");
+        }
+
+        return database.update("task", values, "task_id" + " = ?",
+                new String[] { id } );
+    }
+
     public void deleteTask(String id) {
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -305,17 +333,17 @@ public class DBTools extends SQLiteOpenHelper {
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
-        String taskId = "";
+        String taskStatus = "";
 
         if (cursor.moveToFirst()) {
 
-            taskId = cursor.getString(0);
+            taskStatus = cursor.getString(0);
 
         }
 
         database.close();
 
-        return taskId;
+        return taskStatus;
 
     }
 
