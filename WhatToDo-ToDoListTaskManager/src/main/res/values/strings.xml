@@ -33,6 +33,7 @@
     <string name="finish_task_btn">Finished!</string>
     <string name="unfinish_task_btn">Not finished..</string>
     <string name="level_of_importance_textview">Importance:</string>
+    <string name="list_belonging_to">List:</string>
 
     <!-- New Task -->
     <string name="title_activity_new_task">NewTaskActivity</string>

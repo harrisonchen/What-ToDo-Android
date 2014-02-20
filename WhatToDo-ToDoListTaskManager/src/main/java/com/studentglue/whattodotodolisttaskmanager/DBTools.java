@@ -144,7 +144,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM task ORDER BY importance DESC, task_id DESC";
+        String selectQuery = "SELECT * FROM task ORDER BY status ASC, importance DESC, task_id DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -157,8 +157,10 @@ public class DBTools extends SQLiteOpenHelper {
                 HashMap<String, String> taskMap = new HashMap<String, String>();
 
                 taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("list_id", cursor.getString(1));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
+                taskMap.put("importance", cursor.getString(4));
 
                 taskArrayList.add(taskMap);
             } while (cursor.moveToNext());
@@ -173,7 +175,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         ArrayList<HashMap<String, String>> taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM task WHERE importance > 0 ORDER BY importance DESC, task_id DESC";
+        String selectQuery = "SELECT * FROM task WHERE importance > 0 ORDER BY status ASC, importance DESC, task_id DESC";
 
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -186,6 +188,7 @@ public class DBTools extends SQLiteOpenHelper {
                 HashMap<String, String> taskMap = new HashMap<String, String>();
 
                 taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("list_id", cursor.getString(1));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
                 taskMap.put("importance", cursor.getString(4));
@@ -375,6 +378,26 @@ public class DBTools extends SQLiteOpenHelper {
         database.close();
     }
 
+    public String getListCategory(String id) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String category = "";
+
+        String selectQuery = "SELECT category FROM list WHERE list_id=" + id;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            category = cursor.getString(0);
+        }
+
+        database.close();
+
+        return category;
+
+    }
+
     public ArrayList<HashMap<String, String>> getAllLists() {
 
         ArrayList<HashMap<String, String>> listArrayList;
@@ -412,7 +435,7 @@ public class DBTools extends SQLiteOpenHelper {
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
         String selectQuery = "SELECT * FROM task WHERE task.list_id='" +
-                list_id + "' ORDER BY importance DESC, task_id DESC";
+                list_id + "' ORDER BY status ASC, importance DESC, task_id DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -425,8 +448,10 @@ public class DBTools extends SQLiteOpenHelper {
                 HashMap<String, String> taskMap = new HashMap<String, String>();
 
                 taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("list_id", cursor.getString(1));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
+                taskMap.put("importance", cursor.getString(4));
 
                 taskArrayList.add(taskMap);
             } while (cursor.moveToNext());
@@ -435,6 +460,23 @@ public class DBTools extends SQLiteOpenHelper {
         database.close();
 
         return taskArrayList;
+    }
+
+    public int getTaskCountInList(String list_id) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        int count = 0;
+
+        String selectQuery = "SELECT * FROM task WHERE task.list_id=" + list_id +" AND status=0";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        count = cursor.getCount();
+
+        database.close();
+
+        return count;
     }
 
 }

@@ -18,11 +18,12 @@ public class ListEntryAdapter extends BaseAdapter {
 
     ArrayList<HashMap<String, String>> list;
     Context context;
+    DBTools dbtools;
 
     ListEntryAdapter(Context c) {
 
         context = c;
-        DBTools dbtools = new DBTools(context);
+        dbtools = new DBTools(context);
 
         list = dbtools.getAllLists();
     }
@@ -54,7 +55,8 @@ public class ListEntryAdapter extends BaseAdapter {
         HashMap<String, String> listMap = list.get(i);
 
         listId.setText(listMap.get("list_id"));
-        listName.setText(listMap.get("category"));
+        listName.setText(listMap.get("category") +
+                " (" + dbtools.getTaskCountInList(listMap.get("list_id")) + ")" );
 
         return row;
     }

@@ -47,7 +47,7 @@
         android:textColor="#FFF"
         android:textStyle="bold"
         android:padding="8dp"
-        android:id="@+id/task_text_view"
+        android:id="@+id/list_text_view"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_below="@+id/add_todo_edit_text"
         android:layout_toLeftOf="@+id/add_todo_btn" />
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/taskListView"
-        android:layout_below="@+id/task_text_view"
+        android:layout_below="@+id/list_text_view"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/what_todo_btn"/>
 
@@ -92,6 +92,6 @@
         android:textColor="#FFF"
         android:layout_below="@+id/add_todo_edit_text"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/task_text_view" />
+        android:layout_alignBottom="@+id/list_text_view" />
 
 </RelativeLayout>

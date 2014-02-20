@@ -8,26 +8,20 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +36,7 @@ public class ListActivity extends ActionBarActivity {
 
     TextView taskId;
     TextView taskName;
-    TextView task_text_view;
+    TextView list_text_view;
 
     Button add_todo_btn;
     Button delete_list_btn;
@@ -82,11 +76,12 @@ public class ListActivity extends ActionBarActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         list_id = extras.getString("EXTRA_LIST_ID");
-        list_name = extras.getString("EXTRA_LIST_NAME");
+        //list_name = extras.getString("EXTRA_LIST_NAME");
+        list_name = dbtools.getListCategory(list_id);
 
-        task_text_view = (TextView) findViewById(R.id.task_text_view);
+        list_text_view = (TextView) findViewById(R.id.list_text_view);
 
-        task_text_view.setText(list_name);
+        list_text_view.setText(list_name + " (" + dbtools.getTaskCountInList(list_id) + ")" );
 
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
         delete_list_btn = (Button) findViewById(R.id.delete_list_btn);
@@ -191,6 +186,14 @@ public class ListActivity extends ActionBarActivity {
         customAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        setResult(RESULT_OK);
+
+        super.onBackPressed();
+    }
+
     /**
      * Handle the action of the button being clicked
      */
@@ -234,6 +237,7 @@ public class ListActivity extends ActionBarActivity {
         else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
 
             setAdapter();
+            list_text_view.setText(list_name + " (" + dbtools.getTaskCountInList(list_id) + ")" );
         }
         super.onActivityResult(requestCode, resultCode, data);
 

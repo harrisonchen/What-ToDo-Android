@@ -25,7 +25,7 @@
         android:id="@+id/update_task_btn"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/fakeView" />
+        android:layout_toLeftOf="@+id/delete_task_btn" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -65,8 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/reminder_textview"
-        android:id="@+id/reminder_textview"
+        android:text="@string/list_belonging_to"
+        android:id="@+id/list_belonging_to"
         android:layout_below="@+id/importance_textview"
         android:layout_alignParentLeft="true" />
 
@@ -90,8 +90,7 @@
         android:text="@string/delete_task_btn"
         android:id="@+id/delete_task_btn"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/level_of_importance_seekbar"
-        android:layout_toRightOf="@+id/update_task_btn" />
+        android:layout_alignRight="@+id/level_of_importance_seekbar" />
 
     <Button
         android:layout_width="wrap_content"
@@ -103,5 +102,28 @@
         android:layout_marginBottom="48dp"
         android:layout_above="@+id/update_task_btn"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/reminder_textview"
+        android:id="@+id/reminder_textview"
+        android:layout_below="@+id/list_belonging_to"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_belonging_to2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#696969"
+        android:text="@string/hello_world"
+        android:paddingLeft="5sp"
+        android:paddingRight="5sp"
+        android:layout_below="@+id/importance_textview"
+        android:layout_toRightOf="@+id/list_belonging_to"
+        android:layout_above="@+id/reminder_textview"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>
