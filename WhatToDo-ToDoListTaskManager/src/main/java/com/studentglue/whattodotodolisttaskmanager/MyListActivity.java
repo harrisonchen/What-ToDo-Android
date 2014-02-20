@@ -47,6 +47,8 @@ public class MyListActivity extends ActionBarActivity {
     EditText add_list_edit_text;
 
     ArrayList<HashMap<String, String>> myList;
+    ListView listView;
+    ListEntryAdapter customAdapter;
 
     DBTools dbtools = new DBTools(this);
 
@@ -77,14 +79,9 @@ public class MyListActivity extends ActionBarActivity {
 
         myList = dbtools.getAllLists();
 
-        ListView listView = (ListView) findViewById(R.id.myListView);
-
-        String[] from = new String[] { "list_id", "category" };
-        final int[] to = { R.id.listId, R.id.listName };
-
-        final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
-                from, to);
-        listView.setAdapter(adapter);
+        listView = (ListView) findViewById(R.id.myListView);
+        customAdapter = new ListEntryAdapter(this);
+        listView.setAdapter(customAdapter);
 
         what_todo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,20 +113,6 @@ public class MyListActivity extends ActionBarActivity {
                 final String listIdValue = listId.getText().toString();
                 final String listNameValue = listName.getText().toString();
 
-                /*dbtools.deleteList(listIdValue);
-
-                for (HashMap<String, String> map : myList) {
-
-                    if (map.get("list_id").equals(listIdValue)) {
-
-                        myList.remove(map);
-                        break;
-                    }
-                }
-
-                adapter.notifyDataSetChanged();
-                view.setAlpha(1);*/
-
                 Intent listIntent = new Intent(getApplication(), ListActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_LIST_ID", listIdValue);
@@ -153,12 +136,6 @@ public class MyListActivity extends ActionBarActivity {
 
                     add_list_edit_text.setText("");
 
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("list_id", dbtools.getNextMaxID("list"));
-                    map.put("category", listName);
-
-                    myList.add(0, map);
-
                     dbtools.addList(listMap);
 
                     myList = dbtools.getAllLists();
@@ -177,16 +154,10 @@ public class MyListActivity extends ActionBarActivity {
     }
 
     public void setAdapter() {
-        ListView listView = (ListView) findViewById(R.id.myListView);
 
-        String[] from = new String[] { "list_id", "category" };
-        final int[] to = { R.id.listId, R.id.listName };
-
-        final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
-                from, to);
-        listView.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
+        customAdapter = new ListEntryAdapter(this);
+        listView.setAdapter(customAdapter);
+        customAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -239,17 +210,7 @@ public class MyListActivity extends ActionBarActivity {
         }
         else if (requestCode == GO_TO_LIST && resultCode == RESULT_OK) {
 
-            myList = dbtools.getAllLists();
-            ListView listView = (ListView) findViewById(R.id.myListView);
-
-            String[] from = new String[] { "list_id", "category" };
-            final int[] to = { R.id.listId, R.id.listName };
-
-            final SimpleAdapter adapter = new SimpleAdapter(this, myList, R.layout.list_entry,
-                    from, to);
-            listView.setAdapter(adapter);
-
-            adapter.notifyDataSetChanged();
+            setAdapter();
         }
         super.onActivityResult(requestCode, resultCode, data);
 

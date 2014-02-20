@@ -49,6 +49,8 @@ public class ListActivity extends ActionBarActivity {
     EditText add_todo_edit_text;
 
     ArrayList<HashMap<String, String>> taskList;
+    ListView listView;
+    ListTaskEntryAdapter customAdapter;
 
     DBTools dbtools = new DBTools(this);
 
@@ -92,15 +94,6 @@ public class ListActivity extends ActionBarActivity {
 
         taskList = dbtools.getAllTaskFromList(list_id);
 
-        ListView listView = (ListView) findViewById(R.id.taskListView);
-
-        String[] from = new String[] { "task_id", "name" };
-        final int[] to = { R.id.taskId, R.id.taskName };
-
-        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
-                from, to);
-        listView.setAdapter(adapter);
-
         what_todo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +102,11 @@ public class ListActivity extends ActionBarActivity {
                 startActivity(whatToDoIntent);
             }
         });
+
+        listView = (ListView) findViewById(R.id.taskListView);
+
+        customAdapter = new ListTaskEntryAdapter(this, list_id);
+        listView.setAdapter(customAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -146,16 +144,7 @@ public class ListActivity extends ActionBarActivity {
 
                     add_todo_edit_text.setText("");
 
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("task_id", dbtools.getNextMaxID("task"));
-                    map.put("name", taskName);
-                    map.put("list_id", list_id);
-
-                    //taskList.add(0, map);
-
                     dbtools.addTaskWithList(taskMap);
-
-                    taskList = dbtools.getAllTaskFromList(list_id);
 
                     setAdapter();
 
@@ -196,16 +185,10 @@ public class ListActivity extends ActionBarActivity {
     }
 
     public void setAdapter() {
-        ListView listView = (ListView) findViewById(R.id.taskListView);
 
-        String[] from = new String[] { "task_id", "name" };
-        final int[] to = { R.id.taskId, R.id.taskName };
-
-        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
-                from, to);
-        listView.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
+        customAdapter = new ListTaskEntryAdapter(this, list_id);
+        listView.setAdapter(customAdapter);
+        customAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -250,17 +233,7 @@ public class ListActivity extends ActionBarActivity {
         }
         else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
 
-            taskList = dbtools.getAllTaskFromList(list_id);
-            ListView listView = (ListView) findViewById(R.id.taskListView);
-
-            String[] from = new String[] { "task_id", "name" };
-            final int[] to = { R.id.taskId, R.id.taskName };
-
-            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
-                    from, to);
-            listView.setAdapter(adapter);
-
-            adapter.notifyDataSetChanged();
+            setAdapter();
         }
         super.onActivityResult(requestCode, resultCode, data);
 

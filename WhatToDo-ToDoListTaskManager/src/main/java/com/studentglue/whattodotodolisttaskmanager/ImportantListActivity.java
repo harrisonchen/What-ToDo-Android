@@ -32,6 +32,8 @@ public class ImportantListActivity extends ActionBarActivity {
     TextView task_text_view;
 
     ArrayList<HashMap<String, String>> taskList;
+    ListView listView;
+    ImportantTaskEntryAdapter customAdapter;
 
     DBTools dbtools = new DBTools(this);
 
@@ -45,14 +47,10 @@ public class ImportantListActivity extends ActionBarActivity {
 
         taskList = dbtools.getAllImportantTasks();
 
-        ListView listView = (ListView) findViewById(R.id.importantTasksList);
+        listView = (ListView) findViewById(R.id.importantTasksList);
 
-        String[] from = new String[] { "task_id", "name" };
-        final int[] to = { R.id.taskId, R.id.taskName };
-
-        final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
-                from, to);
-        listView.setAdapter(adapter);
+        customAdapter = new ImportantTaskEntryAdapter(this);
+        listView.setAdapter(customAdapter);
 
         what_todo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +92,13 @@ public class ImportantListActivity extends ActionBarActivity {
         }*/
     }
 
+    public void setAdapter() {
+
+        customAdapter = new ImportantTaskEntryAdapter(this);
+        listView.setAdapter(customAdapter);
+        customAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onBackPressed() {
 
@@ -107,17 +112,7 @@ public class ImportantListActivity extends ActionBarActivity {
     {
         if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
 
-            taskList = dbtools.getAllImportantTasks();
-            ListView listView = (ListView) findViewById(R.id.importantTasksList);
-
-            String[] from = new String[] { "task_id", "name" };
-            final int[] to = { R.id.taskId, R.id.taskName };
-
-            final SimpleAdapter adapter = new SimpleAdapter(this, taskList, R.layout.task_entry,
-                    from, to);
-            listView.setAdapter(adapter);
-
-            adapter.notifyDataSetChanged();
+            setAdapter();
         }
         super.onActivityResult(requestCode, resultCode, data);
 
