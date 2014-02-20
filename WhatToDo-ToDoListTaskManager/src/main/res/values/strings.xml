@@ -30,6 +30,8 @@
     <string name="reminder_textview">Reminder:</string>
     <string name="update_task_btn">Update</string>
     <string name="delete_task_btn">Delete</string>
+    <string name="finish_task_btn">Finished!</string>
+    <string name="unfinish_task_btn">Not finished..</string>
     <string name="level_of_importance_textview">Importance:</string>
 
     <!-- New Task -->

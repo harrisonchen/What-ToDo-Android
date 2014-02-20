@@ -91,6 +91,17 @@
         android:id="@+id/delete_task_btn"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/level_of_importance_seekbar"
-        android:layout_toRightOf="@+id/fakeView" />
+        android:layout_toRightOf="@+id/update_task_btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/what_todo_button_custom"
+        android:textColor="#FFF"
+        android:id="@+id/finish_task_btn"
+        android:padding="5sp"
+        android:layout_marginBottom="48dp"
+        android:layout_above="@+id/update_task_btn"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

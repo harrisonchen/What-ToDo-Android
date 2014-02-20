@@ -133,16 +133,13 @@ public class MainActivity extends ActionBarActivity {
                 final String taskIdValue = taskId.getText().toString();
                 final String taskNameValue = taskName.getText().toString();
 
-                dbtools.toggleTaskComplete(taskIdValue, dbtools.getTaskStatus(taskIdValue));
-                setAdapter();
-
-                /*Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
+                Intent taskIntent = new Intent(getApplication(), TaskActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TASK_ID", taskIdValue);
                 extras.putString("EXTRA_TASK_NAME", taskNameValue);
                 extras.putString("EXTRA_TASK_IMPORTANCE", dbtools.getTaskImportance(taskIdValue));
                 taskIntent.putExtras(extras);
-                startActivityForResult(taskIntent, UPDATE_LISTVIEW);*/
+                startActivityForResult(taskIntent, UPDATE_LISTVIEW);
 
             }
         });

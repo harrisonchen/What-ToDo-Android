@@ -31,6 +31,7 @@ public class TaskActivity extends ActionBarActivity {
     SeekBar level_of_importance_seekbar;
     Button update_task_btn;
     Button delete_task_btn;
+    Button finish_task_btn;
 
     DBTools dbtools;
 
@@ -56,6 +57,15 @@ public class TaskActivity extends ActionBarActivity {
         level_of_importance_seekbar.setProgress(Integer.parseInt(task_importance));
         update_task_btn = (Button) findViewById(R.id.update_task_btn);
         delete_task_btn = (Button) findViewById(R.id.delete_task_btn);
+        finish_task_btn = (Button) findViewById(R.id.finish_task_btn);
+
+        if(dbtools.getTaskStatus(task_id).equals("0")) {
+            finish_task_btn.setText(R.string.finish_task_btn);
+        }
+        else {
+            finish_task_btn.setText(R.string.unfinish_task_btn);
+        }
+
 
         task_edittext.setText(task_name);
 
@@ -86,6 +96,19 @@ public class TaskActivity extends ActionBarActivity {
             public void onClick(View view) {
 
                 dbtools.deleteTask(task_id);
+
+                setResult(Activity.RESULT_OK);
+
+                finish();
+            }
+        });
+
+        finish_task_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                dbtools.toggleTaskComplete(task_id, dbtools.getTaskStatus(task_id));
 
                 setResult(Activity.RESULT_OK);
 
