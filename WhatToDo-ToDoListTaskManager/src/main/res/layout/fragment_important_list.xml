@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/what_todo_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -8,9 +9,44 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ImportantListActivity$PlaceholderFragment">
 
-    <TextView
-        android:text="@string/hello_world"
+    <View android:id="@+id/fakeView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"/>
+
+    <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/importantTasksList"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/what_todo_btn"
+        android:layout_below="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/what_todo_button_custom"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:text="@string/what_todo_btn"
+        android:id="@+id/what_todo_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="@drawable/what_todo_button"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="@string/important_list_textview"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

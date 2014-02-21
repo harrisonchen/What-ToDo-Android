@@ -141,6 +141,8 @@ public class ListActivity extends ActionBarActivity {
 
                     dbtools.addTaskWithList(taskMap);
 
+                    list_text_view.setText(list_name + " (" + dbtools.getTaskCountInList(list_id) + ")" );
+
                     setAdapter();
 
                 }
@@ -159,6 +161,7 @@ public class ListActivity extends ActionBarActivity {
                         dbtools.deleteList(list_id);
 
                         setResult(Activity.RESULT_OK);
+
                         finish();
                     }
                 });
@@ -236,8 +239,9 @@ public class ListActivity extends ActionBarActivity {
         }
         else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
 
-            setAdapter();
             list_text_view.setText(list_name + " (" + dbtools.getTaskCountInList(list_id) + ")" );
+
+            setAdapter();
         }
         super.onActivityResult(requestCode, resultCode, data);
 

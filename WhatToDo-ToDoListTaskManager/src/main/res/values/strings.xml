@@ -52,10 +52,16 @@
     <string name="important_tasks_btn">Important</string>
     <string name="title_activity_important_task">Important</string>
     <string name="title_activity_task">TaskActivity</string>
-
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="title_activity_view_pager">ViewPagerActivity</string>
+
+    <string name="important_list_textview">Important!</string>
+
+    <string name="todo_tab">TODO</string>
+    <string name="my_list_tab">LISTS</string>
+    <string name="important_tab">IMPORTANT</string>
 
 </resources>
