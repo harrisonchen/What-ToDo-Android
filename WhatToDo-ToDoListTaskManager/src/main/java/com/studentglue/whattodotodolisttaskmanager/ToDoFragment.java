@@ -2,6 +2,8 @@ package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
@@ -13,11 +15,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ToDoFragment extends Fragment {
 
@@ -30,6 +34,7 @@ public class ToDoFragment extends Fragment {
 
     Button what_todo_btn;
     Button add_todo_btn;
+    ImageButton speak_btn;
 
     TextView taskId;
     TextView taskName;
@@ -60,6 +65,17 @@ public class ToDoFragment extends Fragment {
 
         what_todo_btn = (Button) todoFragmentView.findViewById(R.id.what_todo_btn);
         add_todo_btn = (Button) todoFragmentView.findViewById(R.id.add_todo_btn);
+        speak_btn = (ImageButton) todoFragmentView.findViewById(R.id.speak_btn);
+
+        // Disable button if no recognition service is present
+        PackageManager pm = getActivity().getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0)
+        {
+            speak_btn.setEnabled(false);
+            //speakButton.setText("Recognizer not present");
+        }
 
         add_todo_edit_text = (EditText) todoFragmentView.findViewById(R.id.add_todo_edit_text);
 
@@ -123,6 +139,14 @@ public class ToDoFragment extends Fragment {
             }
         });
 
+        speak_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startVoiceRecognitionActivity();
+            }
+        });
+
         return todoFragmentView;
     }
 
@@ -131,6 +155,18 @@ public class ToDoFragment extends Fragment {
         customAdapter = new TaskEntryAdapter(getActivity());
         listView.setAdapter(customAdapter);
         customAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Fire an intent to start the voice recognition activity.
+     */
+    private void startVoiceRecognitionActivity()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now");
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override

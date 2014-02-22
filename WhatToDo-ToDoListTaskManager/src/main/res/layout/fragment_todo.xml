@@ -65,7 +65,6 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="speakButtonClicked"
         android:id="@+id/speak_btn"
         android:background="@drawable/stt_mic"
         android:layout_alignParentTop="true"
