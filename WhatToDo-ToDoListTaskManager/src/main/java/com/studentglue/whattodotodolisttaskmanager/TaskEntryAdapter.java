@@ -67,19 +67,19 @@ public class TaskEntryAdapter extends BaseAdapter {
 
         switch(taskMap.get("importance").charAt(0) - 48) {
             case 0:
-                importantColor.setImageResource(R.drawable.yellow_box);
+                importantColor.setImageResource(R.drawable.transparent_tab);
                 break;
             case 1:
-                importantColor.setImageResource(R.drawable.green_box);
+                importantColor.setImageResource(R.drawable.green_tab);
                 break;
             case 2:
-                importantColor.setImageResource(R.drawable.blue_box);
+                importantColor.setImageResource(R.drawable.green_tab);
                 break;
             case 3:
-                importantColor.setImageResource(R.drawable.red_box);
+                importantColor.setImageResource(R.drawable.green_tab);
                 break;
             default:
-                importantColor.setImageResource(R.drawable.yellow_box);
+                importantColor.setImageResource(R.drawable.green_tab);
                 break;
         }
 

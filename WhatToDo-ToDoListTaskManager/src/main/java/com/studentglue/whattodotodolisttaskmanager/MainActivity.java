@@ -44,6 +44,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+
         ActionBar.Tab tab1 = actionBar.newTab();
         tab1.setText(R.string.todo_tab);
         tab1.setTabListener(this);

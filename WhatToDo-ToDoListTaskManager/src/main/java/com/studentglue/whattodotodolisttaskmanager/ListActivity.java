@@ -59,6 +59,9 @@ public class ListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_list);
         setupUI(findViewById(R.id.container));
 
+        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setDisplayShowHomeEnabled(false);
+
         ImageButton speakButton = (ImageButton) findViewById(R.id.speak_btn);
 
         // Disable button if no recognition service is present

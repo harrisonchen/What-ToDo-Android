@@ -2,6 +2,7 @@ package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -43,6 +44,9 @@ public class TaskActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         setupUI(findViewById(R.id.container));
+
+        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setDisplayShowHomeEnabled(false);
 
         dbtools = new DBTools(this);
 

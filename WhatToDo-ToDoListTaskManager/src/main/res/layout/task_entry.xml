@@ -38,13 +38,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/what_todo_icon"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp"
+        android:src="@drawable/green_tab"
         android:id="@+id/importantColor"
         android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/placeholder"
-        android:layout_toRightOf="@+id/taskId" />
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/placeholder"
