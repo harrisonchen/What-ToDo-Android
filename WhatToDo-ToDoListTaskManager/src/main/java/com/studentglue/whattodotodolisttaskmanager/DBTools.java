@@ -398,6 +398,35 @@ public class DBTools extends SQLiteOpenHelper {
 
     }
 
+
+    public String getTaskList(String id) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String list_id = "";
+        String category = "";
+
+        String selectQuery = "SELECT list_id FROM task WHERE task_id=" + id;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            list_id = cursor.getString(0);
+        }
+
+        selectQuery = "SELECT category FROM list WHERE list_id=" + list_id;
+
+        cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            category = cursor.getString(0);
+        }
+
+        database.close();
+
+        return category;
+    }
+
     public ArrayList<HashMap<String, String>> getAllLists() {
 
         ArrayList<HashMap<String, String>> listArrayList;

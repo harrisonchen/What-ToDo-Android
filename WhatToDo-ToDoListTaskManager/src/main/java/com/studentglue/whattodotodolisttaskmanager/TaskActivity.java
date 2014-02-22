@@ -24,7 +24,10 @@ public class TaskActivity extends ActionBarActivity {
     Bundle extras;
     String task_id;
     String task_name;
+    String task_list;
     String task_importance;
+
+    TextView list_belonging_to;
 
     EditText task_edittext;
     TextView level_of_importance_textview;
@@ -47,7 +50,11 @@ public class TaskActivity extends ActionBarActivity {
         extras = intent.getExtras();
         task_id = extras.getString("EXTRA_TASK_ID");
         task_name = extras.getString("EXTRA_TASK_NAME");
+        task_list = extras.getString("EXTRA_TASK_LIST");
         task_importance = extras.getString("EXTRA_TASK_IMPORTANCE");
+
+        list_belonging_to = (TextView) findViewById(R.id.list_belonging_to);
+        list_belonging_to.setText(task_list);
 
         task_edittext = (EditText) findViewById(R.id.task_edittext);
         level_of_importance_textview = (TextView) findViewById(R.id.level_of_importance_textview);
@@ -68,6 +75,7 @@ public class TaskActivity extends ActionBarActivity {
 
 
         task_edittext.setText(task_name);
+
 
         update_task_btn.setOnClickListener(new View.OnClickListener() {
 

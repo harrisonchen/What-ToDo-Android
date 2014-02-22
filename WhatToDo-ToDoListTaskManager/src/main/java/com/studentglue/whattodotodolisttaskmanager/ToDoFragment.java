@@ -92,6 +92,7 @@ public class ToDoFragment extends Fragment {
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TASK_ID", taskIdValue);
                 extras.putString("EXTRA_TASK_NAME", taskNameValue);
+                extras.putString("EXTRA_TASK_LIST", dbtools.getTaskList(taskIdValue));
                 extras.putString("EXTRA_TASK_IMPORTANCE", dbtools.getTaskImportance(taskIdValue));
                 taskIntent.putExtras(extras);
                 startActivityForResult(taskIntent, UPDATE_LISTVIEW);
