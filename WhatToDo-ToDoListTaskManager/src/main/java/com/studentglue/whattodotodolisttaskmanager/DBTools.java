@@ -144,7 +144,7 @@ public class DBTools extends SQLiteOpenHelper {
 
         taskArrayList = new ArrayList<HashMap<String, String>>();
 
-        String selectQuery = "SELECT * FROM task ORDER BY status ASC, importance DESC, task_id DESC";
+        String selectQuery = "SELECT * FROM task ORDER BY status ASC, task_id DESC, importance DESC";
 
         SQLiteDatabase database = this.getWritableDatabase();
 

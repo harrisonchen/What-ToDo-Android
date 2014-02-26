@@ -121,6 +121,7 @@ public class ListActivity extends ActionBarActivity {
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TASK_ID", taskIdValue);
                 extras.putString("EXTRA_TASK_NAME", taskNameValue);
+                extras.putString("EXTRA_TASK_LIST", list_name);
                 extras.putString("EXTRA_TASK_IMPORTANCE", dbtools.getTaskImportance(taskIdValue));
                 taskIntent.putExtras(extras);
                 startActivityForResult(taskIntent, UPDATE_LISTVIEW);
