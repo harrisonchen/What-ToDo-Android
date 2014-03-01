@@ -8,6 +8,8 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/what_todo_icon"
@@ -61,6 +63,7 @@
             android:label="@string/title_activity_view_pager"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <receiver   android:name=".AlarmManagerBroadcastReceiver"></receiver>
     </application>
 
 </manifest>

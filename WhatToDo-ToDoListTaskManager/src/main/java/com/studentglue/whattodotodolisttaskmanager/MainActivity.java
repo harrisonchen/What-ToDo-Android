@@ -1,9 +1,20 @@
 package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.ActionBar;
+import android.app.AlarmManager;
 import android.app.FragmentTransaction;
+import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -11,15 +22,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Calendar;
+
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     ViewPager viewPager;
     ActionBar actionBar;
 
+    private AlarmManagerBroadcastReceiver notification;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        notification = new AlarmManagerBroadcastReceiver();
+        notification.SetAlarm(this);
 
         viewPager= (ViewPager) findViewById(R.id.view_pager);
         FragmentManager fragmentManager=getSupportFragmentManager();
