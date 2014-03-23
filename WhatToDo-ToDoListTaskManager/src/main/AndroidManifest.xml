@@ -63,7 +63,6 @@
             android:label="@string/title_activity_view_pager"
             android:windowSoftInputMode="stateHidden" >
         </activity>
-        <receiver   android:name=".AlarmManagerBroadcastReceiver"></receiver>
     </application>
 
 </manifest>

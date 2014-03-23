@@ -29,15 +29,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ViewPager viewPager;
     ActionBar actionBar;
 
-    private AlarmManagerBroadcastReceiver notification;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        notification = new AlarmManagerBroadcastReceiver();
-        notification.SetAlarm(this);
 
         viewPager= (ViewPager) findViewById(R.id.view_pager);
         FragmentManager fragmentManager=getSupportFragmentManager();
