@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -31,8 +32,7 @@ public class TaskActivity extends ActionBarActivity {
     TextView list_belonging_to;
 
     EditText task_edittext;
-    TextView level_of_importance_textview;
-    SeekBar level_of_importance_seekbar;
+    CheckBox important_checkbox;
     Button update_task_btn;
     Button delete_task_btn;
     Button finish_task_btn;
@@ -61,11 +61,16 @@ public class TaskActivity extends ActionBarActivity {
         list_belonging_to.setText(task_list);
 
         task_edittext = (EditText) findViewById(R.id.task_edittext);
-        level_of_importance_textview = (TextView) findViewById(R.id.level_of_importance_textview);
-        level_of_importance_textview.setText(task_importance);
-        level_of_importance_seekbar = (SeekBar) findViewById(R.id.level_of_importance_seekbar);
-        level_of_importance_seekbar.setOnSeekBarChangeListener(levelOfImportanceSeekBarListener);
-        level_of_importance_seekbar.setProgress(Integer.parseInt(task_importance));
+
+        important_checkbox = (CheckBox) findViewById(R.id.important_checkbox);
+
+        if(Integer.parseInt(task_importance) > 0) {
+            important_checkbox.setChecked(true);
+        }
+        else {
+            important_checkbox.setChecked(false);
+        }
+
         update_task_btn = (Button) findViewById(R.id.update_task_btn);
         delete_task_btn = (Button) findViewById(R.id.delete_task_btn);
         finish_task_btn = (Button) findViewById(R.id.finish_task_btn);
@@ -92,7 +97,12 @@ public class TaskActivity extends ActionBarActivity {
 
                 taskMap.put("task_id", task_id);
                 taskMap.put("taskName", taskName);
-                taskMap.put("importance", String.valueOf(level_of_importance_seekbar.getProgress()));
+                if(important_checkbox.isChecked()) {
+                    taskMap.put("importance", "1");
+                }
+                else {
+                    taskMap.put("importance", "0");
+                }
 
                 dbtools.updateTask(taskMap);
 
@@ -136,26 +146,6 @@ public class TaskActivity extends ActionBarActivity {
                     .commit();
         }*/
     }
-
-    private SeekBar.OnSeekBarChangeListener levelOfImportanceSeekBarListener =
-            new SeekBar.OnSeekBarChangeListener() {
-
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    int importance = level_of_importance_seekbar.getProgress();
-                    level_of_importance_textview.setText(String.valueOf(importance));
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            };
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

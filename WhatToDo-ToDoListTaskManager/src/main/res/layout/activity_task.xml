@@ -49,7 +49,7 @@
         android:layout_below="@+id/task_edittext"
         android:layout_alignParentLeft="true" />
 
-    <SeekBar
+    SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/level_of_importance_seekbar"
@@ -70,7 +70,7 @@
         android:layout_below="@+id/importance_textview"
         android:layout_alignParentLeft="true" />
 
-    <TextView
+    TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -90,7 +90,7 @@
         android:text="@string/delete_task_btn"
         android:id="@+id/delete_task_btn"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/level_of_importance_seekbar" />
+        android:layout_alignParentRight="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -125,5 +125,14 @@
         android:layout_toRightOf="@+id/list_belonging_to_textview"
         android:layout_above="@+id/reminder_textview"
         android:layout_alignParentRight="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/important_checkbox"
+        android:layout_alignBottom="@+id/importance_textview"
+        android:layout_toRightOf="@+id/reminder_textview"
+        android:layout_below="@+id/task_edittext"
+        android:layout_toLeftOf="@+id/fakeView" />
 
 </RelativeLayout>

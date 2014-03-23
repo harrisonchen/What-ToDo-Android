@@ -32,7 +32,7 @@
     <string name="delete_task_btn">Delete</string>
     <string name="finish_task_btn">Finished!</string>
     <string name="unfinish_task_btn">Not finished..</string>
-    <string name="level_of_importance_textview">Importance:</string>
+    <string name="level_of_importance_textview">Important</string>
     <string name="list_belonging_to">List:</string>
 
     <!-- New Task -->
