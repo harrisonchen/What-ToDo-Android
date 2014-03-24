@@ -34,14 +34,8 @@ public class MyListActivity extends ActionBarActivity {
     private static final int REQUEST_CODE = 1234;
     private static final int GO_TO_LIST = 5;
 
-    Button what_todo_btn;
-
-    Button important_tasks_btn;
-
     TextView listId;
     TextView listName;
-
-    Button delete_list_btn;
 
     Button add_list_btn;
     EditText add_list_edit_text;
@@ -70,10 +64,6 @@ public class MyListActivity extends ActionBarActivity {
             //speakButton.setText("Recognizer not present");
         }
 
-        what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
-
-        important_tasks_btn = (Button) findViewById(R.id.important_tasks_btn);
-
         add_list_btn = (Button) findViewById(R.id.add_list_btn);
         add_list_edit_text = (EditText) findViewById(R.id.add_list_edit_text);
 
@@ -82,25 +72,6 @@ public class MyListActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.myListView);
         customAdapter = new ListEntryAdapter(this);
         listView.setAdapter(customAdapter);
-
-        what_todo_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
-                startActivity(whatToDoIntent);
-            }
-        });
-
-        important_tasks_btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                Intent importantIntent = new Intent(getApplication(), ImportantListActivity.class);
-                startActivity(importantIntent);
-            }
-        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

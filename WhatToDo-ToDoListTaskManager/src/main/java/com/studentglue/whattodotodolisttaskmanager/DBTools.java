@@ -404,7 +404,7 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
 
         String list_id = "";
-        String category = "";
+        String category = "None";
 
         String selectQuery = "SELECT list_id FROM task WHERE task_id=" + id;
 

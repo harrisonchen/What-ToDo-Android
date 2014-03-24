@@ -17,35 +17,13 @@
         android:layout_height="0dp"
         android:layout_centerInParent="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/what_todo_button_custom"
-        android:textColor="#FFF"
-        android:text="@string/recent_tasks_btn"
-        android:id="@+id/recent_tasks_btn"
-        android:layout_alignRight="@id/fakeView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/what_todo_button_custom"
-        android:textColor="#FFF"
-        android:text="@string/my_lists_btn"
-        android:id="@+id/my_lists_btn"
-        android:layout_alignLeft="@id/fakeView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/importantTasksList"
-        android:layout_below="@+id/recent_tasks_btn"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/what_todo_btn"/>
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/what_todo_btn" />
 
     <Button
         android:layout_width="wrap_content"
