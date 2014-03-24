@@ -45,9 +45,6 @@ public class TaskActivity extends ActionBarActivity {
         setContentView(R.layout.activity_task);
         setupUI(findViewById(R.id.container));
 
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setDisplayShowHomeEnabled(false);
-
         dbtools = new DBTools(this);
 
         intent = getIntent();
