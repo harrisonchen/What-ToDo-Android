@@ -41,25 +41,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/level_of_importance_textview"
         android:id="@+id/importance_textview"
-        android:layout_below="@+id/task_edittext"
+        android:layout_below="@+id/list_belonging_to_textview"
         android:layout_alignParentLeft="true" />
-
-    SeekBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/level_of_importance_seekbar"
-        android:max="3"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:indeterminate="false"
-        android:layout_below="@+id/task_edittext"
-        android:layout_alignLeft="@+id/fakeView"
-        android:layout_alignParentRight="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,20 +53,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/list_belonging_to"
         android:id="@+id/list_belonging_to_textview"
-        android:layout_below="@+id/importance_textview"
-        android:layout_alignParentLeft="true" />
-
-    TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/level_of_importance_textview"
-        android:gravity="center"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:layout_below="@+id/task_edittext"
-        android:layout_toRightOf="@+id/importance_textview"
-        android:layout_toLeftOf="@+id/level_of_importance_seekbar" />
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -106,33 +80,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/reminder_textview"
-        android:layout_below="@+id/list_belonging_to_textview"
-        android:layout_alignParentLeft="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/list_belonging_to"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#696969"
         android:text="@string/hello_world"
         android:paddingLeft="5sp"
         android:paddingRight="5sp"
-        android:layout_below="@+id/importance_textview"
-        android:layout_toRightOf="@+id/list_belonging_to_textview"
-        android:layout_above="@+id/reminder_textview"
-        android:layout_alignParentRight="true" />
+        android:layout_alignTop="@+id/list_belonging_to_textview"
+        android:layout_toRightOf="@+id/list_belonging_to_textview" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/important_checkbox"
         android:layout_alignBottom="@+id/importance_textview"
-        android:layout_toRightOf="@+id/reminder_textview"
-        android:layout_below="@+id/task_edittext"
-        android:layout_toLeftOf="@+id/fakeView" />
+        android:layout_toRightOf="@+id/importance_textview"
+        android:layout_alignTop="@+id/importance_textview" />
 
 </RelativeLayout>
