@@ -26,36 +26,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.studentglue.whattodotodolisttaskmanager.NewListActivity"
-            android:label="@string/title_activity_new_list" >
+            android:name="com.studentglue.whattodotodolisttaskmanager.NewListActivity" >
         </activity>
         <activity
-            android:name="com.studentglue.whattodotodolisttaskmanager.NewTaskActivity"
-            android:label="@string/title_activity_new_task" >
+            android:name="com.studentglue.whattodotodolisttaskmanager.NewTaskActivity" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.MyListActivity"
-            android:label="@string/title_activity_my_list"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.ListActivity"
-            android:label="@string/title_activity_list"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.WhatToDoActivity"
-            android:label="@string/title_activity_what_to_do"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.ImportantListActivity"
-            android:label="@string/title_activity_important_task"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.studentglue.whattodotodolisttaskmanager.TaskActivity"
-            android:label="@string/title_activity_task"
             android:windowSoftInputMode="stateHidden" >
         </activity>
     </application>
