@@ -1,7 +1,99 @@
-<android.support.v4.view.ViewPager
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/view_pager"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:background="@drawable/what_todo_bg"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" >
 
-</android.support.v4.view.ViewPager>
+    <View android:id="@+id/fakeView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000"
+        android:textColor="#FFF"
+        android:padding="8dp"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:id="@+id/add_todo_edit_text"
+        android:hint="@string/add_todo_edit_text"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/add_todo_btn"
+        android:layout_toRightOf="@+id/speak_btn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_button_custom"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:text="@string/add_todo_btn"
+        android:id="@+id/add_todo_btn"
+        android:layout_alignBaseline="@+id/add_todo_edit_text"
+        android:layout_alignBottom="@+id/add_todo_edit_text"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/what_todo_button_custom"
+        android:textColor="#FFF"
+        android:text="@string/my_lists_btn"
+        android:id="@+id/my_lists_btn"
+        android:layout_alignRight="@id/fakeView"
+        android:layout_below="@+id/add_todo_edit_text"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/what_todo_button_custom"
+        android:textColor="#FFF"
+        android:text="@string/important_tasks_btn"
+        android:id="@+id/important_tasks_btn"
+        android:layout_alignLeft="@id/fakeView"
+        android:layout_below="@+id/add_todo_btn"
+        android:layout_alignParentRight="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/taskListView"
+        android:layout_below="@+id/my_lists_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/what_todo_btn"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/what_todo_button_custom"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:text="@string/what_todo_btn"
+        android:id="@+id/what_todo_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
+
+    <ImageButton
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="speakButtonClicked"
+        android:id="@+id/speak_btn"
+        android:background="@drawable/stt_mic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/my_lists_btn" />
+
+</RelativeLayout>

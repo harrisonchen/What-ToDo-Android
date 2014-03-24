@@ -58,11 +58,6 @@
             android:label="@string/title_activity_task"
             android:windowSoftInputMode="stateHidden" >
         </activity>
-        <activity
-            android:name="com.studentglue.whattodotodolisttaskmanager.ViewPagerActivity"
-            android:label="@string/title_activity_view_pager"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
     </application>
 
 </manifest>
