@@ -22,9 +22,8 @@
         android:maxLines="1"
         android:id="@+id/add_list_edit_text"
         android:hint="@string/add_list_edit_text"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/add_list_btn"
-        android:layout_toRightOf="@+id/speak_btn"/>
+        android:layout_toRightOf="@+id/speak_btn"
+        android:layout_below="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,9 +33,9 @@
         android:textStyle="bold"
         android:text="@string/add_list_btn"
         android:id="@+id/add_list_btn"
-        android:layout_alignBaseline="@+id/add_list_edit_text"
         android:layout_alignBottom="@+id/add_list_edit_text"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/speak_btn" />
 
     <View android:id="@+id/fakeView"
         android:layout_width="0dp"
@@ -57,8 +56,22 @@
         android:onClick="speakButtonClicked"
         android:id="@+id/speak_btn"
         android:background="@drawable/stt_mic"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/myListView"
+        android:layout_below="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFF"
+        android:text="@string/my_lists"
+        android:padding="4sp"
+        android:gravity="center"
+        android:background="@drawable/what_todo_button_custom"
+        android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_above="@+id/myListView" />
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

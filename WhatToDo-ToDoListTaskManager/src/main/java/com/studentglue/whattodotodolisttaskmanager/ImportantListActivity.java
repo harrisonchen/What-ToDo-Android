@@ -2,6 +2,9 @@ package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -14,18 +17,24 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ImportantListActivity extends ActionBarActivity {
 
+    private static final int REQUEST_CODE = 1234;
     private static final int UPDATE_LISTVIEW = 2;
 
     Button what_todo_btn;
+
+    EditText add_todo_edit_text;
+    Button add_todo_btn;
 
     TextView taskId;
     TextView taskName;
@@ -43,6 +52,20 @@ public class ImportantListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_important_list);
         //setupUI(findViewById(R.id.container));
 
+        ImageButton speakButton = (ImageButton) findViewById(R.id.speak_btn);
+
+        // Disable button if no recognition service is present
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0)
+        {
+            speakButton.setEnabled(false);
+            //speakButton.setText("Recognizer not present");
+        }
+
+        add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
         taskList = dbtools.getAllImportantTasks();
@@ -52,11 +75,41 @@ public class ImportantListActivity extends ActionBarActivity {
         customAdapter = new ImportantTaskEntryAdapter(this);
         listView.setAdapter(customAdapter);
 
+        add_todo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
+
+                String taskName = add_todo_edit_text.getText().toString();
+
+                if(!taskName.equals("")) {
+                    HashMap<String, String> taskMap = new HashMap<String, String>();
+
+                    taskMap.put("taskName", taskName);
+                    taskMap.put("list_id", "-1");
+                    taskMap.put("importance", "1");
+
+                    add_todo_edit_text.setText("");
+
+                    dbtools.addImportantTask(taskMap);
+
+                    taskList = dbtools.getAllTasks();
+
+                    setAdapter();
+
+                }
+            }
+        });
+
         what_todo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("IMPORTANCE", "1");
+                whatToDoIntent.putExtras(extras);
                 startActivity(whatToDoIntent);
             }
         });
@@ -108,10 +161,44 @@ public class ImportantListActivity extends ActionBarActivity {
         super.onBackPressed();
     }
 
+    /**
+     * Handle the action of the button being clicked
+     */
+    public void speakButtonClicked(View v)
+    {
+        startVoiceRecognitionActivity();
+    }
+
+    /**
+     * Fire an intent to start the voice recognition activity.
+     */
+    private void startVoiceRecognitionActivity()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now");
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            if (data != null) {
+                // Populate the wordsList with the String values the recognition engine thought it heard
+                ArrayList<String> matches = data.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS);
+
+                String textInput;
+                textInput = matches.get(0);
+
+                add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
+                add_todo_edit_text.setText(textInput);
+            }
+        }
+        else if (requestCode == UPDATE_LISTVIEW && resultCode == RESULT_OK) {
 
             setAdapter();
         }

@@ -19,6 +19,9 @@
     <string name="add_list_btn">Add</string>
     <string name="delete_list_btn">delete</string>
     <string name="delete_list_message">Are you sure?</string>
+    <string name="my_lists">My Lists</string>
+
+    <string name="important_list">Important</string>
 
     <!-- New List -->
     <string name="title_activity_new_list">New List</string>

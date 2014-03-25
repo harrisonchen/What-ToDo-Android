@@ -71,6 +71,20 @@ public class DBTools extends SQLiteOpenHelper {
         database.close();
     }
 
+    public void addImportantTask(HashMap<String, String> queryValues) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("name", queryValues.get("taskName"));
+        values.put("importance", queryValues.get("importance"));
+
+        database.insert("task", null, values);
+
+        database.close();
+    }
+
     public void addTaskWithList(HashMap<String, String> queryValues) {
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -254,6 +268,46 @@ public class DBTools extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
 
         String selectQuery = "SELECT * FROM task where status=0";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        Random rand = new Random();
+
+        int randomTaskPosition;
+
+        if (getIncompleteTaskCount() > 1) {
+
+            do {
+                randomTaskPosition = rand.nextInt(cursor.getCount());
+
+                cursor.moveToPosition(randomTaskPosition);
+
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
+            } while(cursor.getString(2).equals(prevTask));
+        }
+        else {
+
+            cursor.moveToFirst();
+
+            taskMap.put("task_id", cursor.getString(0));
+            taskMap.put("name", cursor.getString(2));
+            taskMap.put("status", cursor.getString(3));
+        }
+
+        database.close();
+
+        return taskMap;
+    }
+
+    public HashMap<String, String> getRandomImportantTask(String prevTask) {
+
+        HashMap<String, String> taskMap = new HashMap<String, String>();
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM task where status = 0 AND importance > 0";
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 

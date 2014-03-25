@@ -23,6 +23,10 @@ public class WhatToDoActivity extends ActionBarActivity {
 
     Button maybe_later_btn;
 
+    Intent intent;
+    Bundle extras;
+    String importance;
+
     TextView todo_text_view;
 
     DBTools dbtools = new DBTools(this);
@@ -33,6 +37,11 @@ public class WhatToDoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_what_to_do);
 
+        intent = getIntent();
+        extras = intent.getExtras();
+
+        importance = extras.getString("IMPORTANCE");
+
         incompleteTaskCount = dbtools.getIncompleteTaskCount();
 
         maybe_later_btn = (Button) findViewById(R.id.maybe_later_btn);
@@ -41,7 +50,12 @@ public class WhatToDoActivity extends ActionBarActivity {
 
         HashMap<String, String> random_task = new HashMap<String, String>();
 
-        if (incompleteTaskCount > 0) {
+        if (importance.equals("1") && incompleteTaskCount > 0) {
+            random_task = dbtools.getRandomImportantTask(prevTask);
+            todo_text_view.setText(random_task.get("name"));
+            prevTask = random_task.get("name");
+        }
+        else if (incompleteTaskCount > 0) {
             random_task = dbtools.getRandomTask(prevTask);
             todo_text_view.setText(random_task.get("name"));
             prevTask = random_task.get("name");
@@ -57,7 +71,12 @@ public class WhatToDoActivity extends ActionBarActivity {
 
                 HashMap<String, String> random_task = new HashMap<String, String>();
 
-                if (incompleteTaskCount > 1) {
+                if (importance.equals("1") && incompleteTaskCount > 0) {
+                    random_task = dbtools.getRandomImportantTask(prevTask);
+                    todo_text_view.setText(random_task.get("name"));
+                    prevTask = random_task.get("name");
+                }
+                else if (incompleteTaskCount > 1) {
                     random_task = dbtools.getRandomTask(prevTask);
                     todo_text_view.setText(random_task.get("name"));
                     prevTask = random_task.get("name");

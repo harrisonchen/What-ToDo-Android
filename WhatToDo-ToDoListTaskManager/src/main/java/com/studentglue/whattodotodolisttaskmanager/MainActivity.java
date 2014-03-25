@@ -92,6 +92,9 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View view) {
 
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("IMPORTANCE", "1");
+                whatToDoIntent.putExtras(extras);
                 startActivity(whatToDoIntent);
             }
         });
