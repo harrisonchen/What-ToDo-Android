@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
     TextView taskName;
 
     EditText add_todo_edit_text;
-    Button add_todo_btn;
+    ImageButton add_todo_btn;
     Button my_list_btn;
 
     Button important_tasks_btn;
@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
 
         important_tasks_btn= (Button) findViewById(R.id.important_tasks_btn);
 
-        add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        add_todo_btn = (ImageButton) findViewById(R.id.add_todo_btn);
         my_list_btn = (Button) findViewById(R.id.my_lists_btn);
 
         taskList = dbtools.getAllTasks();
@@ -93,7 +93,8 @@ public class MainActivity extends ActionBarActivity {
 
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString("IMPORTANCE", "1");
+                extras.putString("IMPORTANCE", "0");
+                extras.putString("LIST_ID", "-1");
                 whatToDoIntent.putExtras(extras);
                 startActivity(whatToDoIntent);
             }

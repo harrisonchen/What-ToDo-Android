@@ -19,18 +19,19 @@ import java.util.HashMap;
 
 public class WhatToDoActivity extends ActionBarActivity {
 
-    static String prevTask = "";
+    String prevTask = "";
 
     Button maybe_later_btn;
 
     Intent intent;
     Bundle extras;
-    String importance;
+    String importance, list_id;
 
     TextView todo_text_view;
 
     DBTools dbtools = new DBTools(this);
     int incompleteTaskCount;
+    int incompleteTaskFromListCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,10 @@ public class WhatToDoActivity extends ActionBarActivity {
         extras = intent.getExtras();
 
         importance = extras.getString("IMPORTANCE");
+        list_id = extras.getString("LIST_ID");
 
         incompleteTaskCount = dbtools.getIncompleteTaskCount();
+        incompleteTaskFromListCount = dbtools.getIncompleteTaskFromListCount(list_id);
 
         maybe_later_btn = (Button) findViewById(R.id.maybe_later_btn);
 
@@ -55,7 +58,12 @@ public class WhatToDoActivity extends ActionBarActivity {
             todo_text_view.setText(random_task.get("name"));
             prevTask = random_task.get("name");
         }
-        else if (incompleteTaskCount > 0) {
+        else if (!list_id.equals("-1") && incompleteTaskFromListCount > 0) {
+            random_task = dbtools.getRandomImportantTaskFromList(prevTask, list_id);
+            todo_text_view.setText(random_task.get("name"));
+            prevTask = random_task.get("name");
+        }
+        else if (list_id.equals("-1") && incompleteTaskCount > 0) {
             random_task = dbtools.getRandomTask(prevTask);
             todo_text_view.setText(random_task.get("name"));
             prevTask = random_task.get("name");
@@ -71,17 +79,22 @@ public class WhatToDoActivity extends ActionBarActivity {
 
                 HashMap<String, String> random_task = new HashMap<String, String>();
 
-                if (importance.equals("1") && incompleteTaskCount > 0) {
+                if (importance.equals("1") && incompleteTaskCount > 1) {
                     random_task = dbtools.getRandomImportantTask(prevTask);
                     todo_text_view.setText(random_task.get("name"));
                     prevTask = random_task.get("name");
                 }
-                else if (incompleteTaskCount > 1) {
+                else if (!list_id.equals("-1") && incompleteTaskFromListCount > 1) {
+                    random_task = dbtools.getRandomImportantTaskFromList(prevTask, list_id);
+                    todo_text_view.setText(random_task.get("name"));
+                    prevTask = random_task.get("name");
+                }
+                else if (list_id.equals("-1") && incompleteTaskCount > 1) {
                     random_task = dbtools.getRandomTask(prevTask);
                     todo_text_view.setText(random_task.get("name"));
                     prevTask = random_task.get("name");
                 }
-                else if (incompleteTaskCount <= 1) {
+                else if (incompleteTaskCount <= 1 || incompleteTaskFromListCount <= 1) {
                     finish();
                 }
             }

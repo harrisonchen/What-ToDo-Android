@@ -38,7 +38,7 @@ public class ListActivity extends ActionBarActivity {
     TextView taskName;
     TextView list_text_view;
 
-    Button add_todo_btn;
+    ImageButton add_todo_btn;
     Button delete_list_btn;
     EditText add_todo_edit_text;
 
@@ -83,7 +83,7 @@ public class ListActivity extends ActionBarActivity {
 
         list_text_view.setText(list_name + " (" + dbtools.getTaskCountInList(list_id) + ")" );
 
-        add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        add_todo_btn = (ImageButton) findViewById(R.id.add_todo_btn);
         delete_list_btn = (Button) findViewById(R.id.delete_list_btn);
         add_todo_edit_text = (EditText) findViewById(R.id.add_todo_edit_text);
 
@@ -94,6 +94,10 @@ public class ListActivity extends ActionBarActivity {
             public void onClick(View view) {
 
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("IMPORTANCE", "0");
+                extras.putString("LIST_ID", list_id);
+                whatToDoIntent.putExtras(extras);
                 startActivity(whatToDoIntent);
             }
         });

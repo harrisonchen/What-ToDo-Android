@@ -34,7 +34,7 @@ public class ImportantListActivity extends ActionBarActivity {
     Button what_todo_btn;
 
     EditText add_todo_edit_text;
-    Button add_todo_btn;
+    ImageButton add_todo_btn;
 
     TextView taskId;
     TextView taskName;
@@ -64,7 +64,7 @@ public class ImportantListActivity extends ActionBarActivity {
             //speakButton.setText("Recognizer not present");
         }
 
-        add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        add_todo_btn = (ImageButton) findViewById(R.id.add_todo_btn);
 
         what_todo_btn = (Button) findViewById(R.id.what_todo_btn);
 
@@ -109,6 +109,7 @@ public class ImportantListActivity extends ActionBarActivity {
                 Intent whatToDoIntent = new Intent(getApplication(), WhatToDoActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("IMPORTANCE", "1");
+                extras.putString("LIST_ID", "-1");
                 whatToDoIntent.putExtras(extras);
                 startActivity(whatToDoIntent);
             }

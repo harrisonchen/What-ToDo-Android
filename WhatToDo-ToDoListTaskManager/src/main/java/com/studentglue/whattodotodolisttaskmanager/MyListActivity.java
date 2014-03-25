@@ -37,7 +37,7 @@ public class MyListActivity extends ActionBarActivity {
     TextView listId;
     TextView listName;
 
-    Button add_list_btn;
+    ImageButton add_list_btn;
     EditText add_list_edit_text;
 
     ArrayList<HashMap<String, String>> myList;
@@ -64,7 +64,7 @@ public class MyListActivity extends ActionBarActivity {
             //speakButton.setText("Recognizer not present");
         }
 
-        add_list_btn = (Button) findViewById(R.id.add_list_btn);
+        add_list_btn = (ImageButton) findViewById(R.id.add_list_btn);
         add_list_edit_text = (EditText) findViewById(R.id.add_list_edit_text);
 
         myList = dbtools.getAllLists();

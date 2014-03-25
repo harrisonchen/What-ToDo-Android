@@ -32,7 +32,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/add_button_custom"
+        android:background="@drawable/add_button_custom2"
         android:textColor="#FFF"
         android:textStyle="bold"
         android:text="@string/add_todo_btn"

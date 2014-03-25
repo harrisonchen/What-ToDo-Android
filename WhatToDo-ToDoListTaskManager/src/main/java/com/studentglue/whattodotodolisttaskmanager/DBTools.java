@@ -341,11 +341,68 @@ public class DBTools extends SQLiteOpenHelper {
         return taskMap;
     }
 
+    public HashMap<String, String> getRandomImportantTaskFromList(String prevTask, String list_id) {
+
+        HashMap<String, String> taskMap = new HashMap<String, String>();
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM task where status = 0 AND list_id = " + list_id;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        Random rand = new Random();
+
+        int randomTaskPosition;
+
+        if (getIncompleteTaskCount() > 1) {
+
+            do {
+                randomTaskPosition = rand.nextInt(cursor.getCount());
+
+                cursor.moveToPosition(randomTaskPosition);
+
+                taskMap.put("task_id", cursor.getString(0));
+                taskMap.put("name", cursor.getString(2));
+                taskMap.put("status", cursor.getString(3));
+            } while(cursor.getString(2).equals(prevTask));
+        }
+        else {
+
+            cursor.moveToFirst();
+
+            taskMap.put("task_id", cursor.getString(0));
+            taskMap.put("name", cursor.getString(2));
+            taskMap.put("status", cursor.getString(3));
+        }
+
+        database.close();
+
+        return taskMap;
+    }
+
     public int getIncompleteTaskCount() {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
         String selectQuery = "SELECT * FROM task where status=0";
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        int count = cursor.getCount();
+
+        cursor.close();
+        //database.close();
+
+        return count;
+
+    }
+
+    public int getIncompleteTaskFromListCount(String list_id) {
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM task where status=0 and list_id = " + list_id;
 
         Cursor cursor = database.rawQuery(selectQuery, null);
 
