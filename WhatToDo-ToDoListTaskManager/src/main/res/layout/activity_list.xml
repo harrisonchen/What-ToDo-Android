@@ -60,7 +60,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/taskListView"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/add_todo_edit_text" />
+        android:layout_below="@+id/add_todo_edit_text"
+        android:layout_above="@+id/what_todo_btn" />
 
     <Button
         android:layout_width="wrap_content"
