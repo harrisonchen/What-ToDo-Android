@@ -27,26 +27,8 @@ public class DBTools extends SQLiteOpenHelper {
                 "importance INTEGER DEFAULT 0, " +
                 "FOREIGN KEY (list_id) REFERENCES list (list_id))";
 
-        String query7 = "INSERT INTO list(category) VALUES ('Groceries')";
-        String query8 = "INSERT INTO list(category) VALUES ('Chores')";
-        String query9 = "INSERT INTO list(category) VALUES ('Bucket List')";
-
-        String query2 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
-        String query3 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
-        String query4 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
-        String query5 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
-        String query6 = "INSERT INTO task(list_id, name) VALUES (1, 'buy chocolate')";
-
         database.execSQL(taskCreateQuery);
         database.execSQL(listCreateQuery);
-        database.execSQL(query7);
-        database.execSQL(query8);
-        database.execSQL(query9);
-        database.execSQL(query2);
-        database.execSQL(query3);
-        database.execSQL(query4);
-        database.execSQL(query5);
-        database.execSQL(query6);
     }
 
     public void onUpgrade(SQLiteDatabase database, int version_old, int current_version) {
