@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int UPDATE_LISTVIEW = 2;
     private static final int GO_TO_MY_LIST = 3;
     private static final int GO_TO_IMPORTANT_LIST = 4;
+    private static final int NEW_TASK = 5;
 
     Button what_todo_btn;
 
@@ -172,6 +173,10 @@ public class MainActivity extends ActionBarActivity {
                     setAdapter();
 
                 }
+                else {
+                    Intent newTaskIntent = new Intent(getApplication(), NewTaskActivity.class);
+                    startActivityForResult(newTaskIntent, NEW_TASK);
+                }
             }
         });
 
@@ -238,6 +243,10 @@ public class MainActivity extends ActionBarActivity {
             setAdapter();
         }
         else if (requestCode == GO_TO_IMPORTANT_LIST && resultCode == RESULT_OK) {
+
+            setAdapter();
+        }
+        else if (requestCode == NEW_TASK && resultCode == RESULT_OK) {
 
             setAdapter();
         }

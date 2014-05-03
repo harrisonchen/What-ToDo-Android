@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:background="@drawable/what_todo_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -36,25 +37,32 @@
         android:layout_height="wrap_content"
         android:text="@string/add_todo_btn"
         android:id="@+id/add_todo_btn"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/new_category_edit_text"
         android:layout_alignParentLeft="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/category_spinner"
+        android:layout_below="@+id/category_text_view"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_category_hint"
+        android:id="@+id/new_category_edit_text"
+        android:layout_below="@+id/category_spinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/task_date"
-        android:id="@+id/textView2"
+        android:text="@string/category_text_view"
+        android:id="@+id/category_text_view"
         android:layout_below="@+id/task_name_edit_text"
-        android:layout_alignParentLeft="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/task_time"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true" />
 
 </RelativeLayout>
