@@ -56,17 +56,17 @@ public class WhatToDoActivity extends ActionBarActivity {
         if (importance.equals("1") && incompleteTaskCount > 0) {
             random_task = dbtools.getRandomImportantTask(prevTask);
             todo_text_view.setText(random_task.get("name"));
-            prevTask = random_task.get("name");
+            prevTask = random_task.get("task_id");
         }
         else if (!list_id.equals("-1") && incompleteTaskFromListCount > 0) {
             random_task = dbtools.getRandomImportantTaskFromList(prevTask, list_id);
             todo_text_view.setText(random_task.get("name"));
-            prevTask = random_task.get("name");
+            prevTask = random_task.get("task_id");
         }
         else if (list_id.equals("-1") && incompleteTaskCount > 0) {
             random_task = dbtools.getRandomTask(prevTask);
             todo_text_view.setText(random_task.get("name"));
-            prevTask = random_task.get("name");
+            prevTask = random_task.get("task_id");
         }
         else {
             todo_text_view.setText("do something...");
@@ -82,17 +82,17 @@ public class WhatToDoActivity extends ActionBarActivity {
                 if (importance.equals("1") && incompleteTaskCount > 1) {
                     random_task = dbtools.getRandomImportantTask(prevTask);
                     todo_text_view.setText(random_task.get("name"));
-                    prevTask = random_task.get("name");
+                    prevTask = random_task.get("task_id");
                 }
                 else if (!list_id.equals("-1") && incompleteTaskFromListCount > 1) {
                     random_task = dbtools.getRandomImportantTaskFromList(prevTask, list_id);
                     todo_text_view.setText(random_task.get("name"));
-                    prevTask = random_task.get("name");
+                    prevTask = random_task.get("task_id");
                 }
                 else if (list_id.equals("-1") && incompleteTaskCount > 1) {
                     random_task = dbtools.getRandomTask(prevTask);
                     todo_text_view.setText(random_task.get("name"));
-                    prevTask = random_task.get("name");
+                    prevTask = random_task.get("task_id");
                 }
                 else if (incompleteTaskCount <= 1 || incompleteTaskFromListCount <= 1) {
                     finish();

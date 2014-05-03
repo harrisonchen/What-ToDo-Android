@@ -267,7 +267,7 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
-            } while(cursor.getString(2).equals(prevTask));
+            } while(cursor.getString(1).equals(prevTask));
         }
         else {
 
@@ -307,7 +307,7 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
-            } while(cursor.getString(2).equals(prevTask));
+            } while(cursor.getString(1).equals(prevTask));
         }
         else {
 
@@ -347,7 +347,7 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
-            } while(cursor.getString(2).equals(prevTask));
+            } while(cursor.getString(1).equals(prevTask));
         }
         else {
 
