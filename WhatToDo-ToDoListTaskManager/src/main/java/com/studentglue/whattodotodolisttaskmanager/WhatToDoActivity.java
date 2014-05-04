@@ -1,17 +1,12 @@
 package com.studentglue.whattodotodolisttaskmanager;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -59,7 +54,7 @@ public class WhatToDoActivity extends ActionBarActivity {
             prevTask = random_task.get("task_id");
         }
         else if (!list_id.equals("-1") && incompleteTaskFromListCount > 0) {
-            random_task = dbtools.getRandomImportantTaskFromList(prevTask, list_id);
+            random_task = dbtools.getRandomTaskFromList(prevTask, list_id);
             todo_text_view.setText(random_task.get("name"));
             prevTask = random_task.get("task_id");
         }
@@ -85,7 +80,7 @@ public class WhatToDoActivity extends ActionBarActivity {
                     prevTask = random_task.get("task_id");
                 }
                 else if (!list_id.equals("-1") && incompleteTaskFromListCount > 1) {
-                    random_task = dbtools.getRandomImportantTaskFromList(prevTask, list_id);
+                    random_task = dbtools.getRandomTaskFromList(prevTask, list_id);
                     todo_text_view.setText(random_task.get("name"));
                     prevTask = random_task.get("task_id");
                 }

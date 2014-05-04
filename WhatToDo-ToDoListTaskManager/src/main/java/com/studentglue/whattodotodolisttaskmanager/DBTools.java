@@ -282,7 +282,7 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
-            } while(cursor.getString(1).equals(prevTask));
+            } while(cursor.getString(0).equals(prevTask));
         }
         else {
 
@@ -322,7 +322,7 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
-            } while(cursor.getString(1).equals(prevTask));
+            } while(cursor.getString(0).equals(prevTask));
         }
         else {
 
@@ -338,7 +338,7 @@ public class DBTools extends SQLiteOpenHelper {
         return taskMap;
     }
 
-    public HashMap<String, String> getRandomImportantTaskFromList(String prevTask, String list_id) {
+    public HashMap<String, String> getRandomTaskFromList(String prevTask, String list_id) {
 
         HashMap<String, String> taskMap = new HashMap<String, String>();
 
@@ -362,7 +362,7 @@ public class DBTools extends SQLiteOpenHelper {
                 taskMap.put("task_id", cursor.getString(0));
                 taskMap.put("name", cursor.getString(2));
                 taskMap.put("status", cursor.getString(3));
-            } while(cursor.getString(1).equals(prevTask));
+            } while(cursor.getString(0).equals(prevTask));
         }
         else {
 
