@@ -122,7 +122,7 @@ public class NewTaskActivity extends ActionBarActivity {
                         taskMap.put("list_id", list_id);
 
                         if(important) {
-                            dbtools.addImportantTask(taskMap);
+                            dbtools.addImportantTaskWithList(taskMap);
                         }
                         else {
                             dbtools.addTaskWithList(taskMap);
