@@ -1,6 +1,7 @@
 package com.studentglue.whattodotodolisttaskmanager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -13,12 +14,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class NewTaskActivity extends ActionBarActivity {
 
@@ -26,6 +32,13 @@ public class NewTaskActivity extends ActionBarActivity {
     EditText new_category_edit_text;
     Spinner category_spinner;
     Button add_todo_btn;
+
+    boolean is_new_category;
+    String list_id;
+
+    ArrayList<HashMap<String, String>> list_entries;
+
+    List<String> entries;
 
     DBTools dbtools;
 
@@ -42,24 +55,99 @@ public class NewTaskActivity extends ActionBarActivity {
         category_spinner = (Spinner) findViewById(R.id.category_spinner);
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
 
+        is_new_category = false;
+        list_id = "-1";
+
+        task_name_edit_text.requestFocus();
+
+        list_entries = dbtools.getAllLists();
+
+        entries = new ArrayList<String>();
+
+        entries.add("Choose a Category");
+        entries.add("No Category");
+        entries.add("New Category");
+
+        for(int i = 0; i < list_entries.size(); ++i) {
+            entries.add(list_entries.get(i).get("category"));
+        }
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, entries);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category_spinner.setAdapter(adapter);
+
         add_todo_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
                 String taskName = task_name_edit_text.getText().toString();
+                String list_category;
 
-                if(!taskName.equals("")) {
-                    HashMap<String, String> taskMap = new HashMap<String, String>();
+                if(is_new_category) {
+                    list_category = new_category_edit_text.getText().toString();
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("category", list_category);
+                    dbtools.addList(map);
 
-                    taskMap.put("taskName", taskName);
-                    taskMap.put("list_id", "-1");
+                    if(!taskName.equals("")) {
+                        HashMap<String, String> taskMap = new HashMap<String, String>();
 
-                    dbtools.addTask(taskMap);
+                        taskMap.put("taskName", taskName);
+                        taskMap.put("list_id", dbtools.getListId(list_category));
 
-                    setResult(RESULT_OK);
+                        dbtools.addTaskWithList(taskMap);
 
-                    finish();
+                        setResult(RESULT_OK);
+
+                        finish();
+                    }
                 }
+                else {
+                    if(!taskName.equals("")) {
+                        HashMap<String, String> taskMap = new HashMap<String, String>();
+
+                        taskMap.put("taskName", taskName);
+                        taskMap.put("list_id", list_id);
+
+                        dbtools.addTaskWithList(taskMap);
+
+                        setResult(RESULT_OK);
+
+                        finish();
+                    }
+                }
+            }
+        });
+
+        category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(category_spinner.getSelectedItem().toString().equals("New Category")) {
+                    new_category_edit_text.setVisibility(View.VISIBLE);
+                    new_category_edit_text.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(new_category_edit_text, InputMethodManager.SHOW_IMPLICIT);
+
+                    is_new_category = true;
+                }
+                else {
+                    String choice = category_spinner.getSelectedItem().toString();
+                    if(!choice.equals("No Category") && !choice.equals("Choose a Category")) {
+                        list_id = dbtools.getListId(choice);
+                    }
+                    else {
+                        list_id = "-1";
+                    }
+
+                    is_new_category = false;
+                    new_category_edit_text.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 

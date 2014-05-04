@@ -47,7 +47,7 @@
     <string name="title_activity_main_list">ListActivity</string>
     <string name="title_activity_list">ToDo List</string>
     <string name="title_activity_what_to_do">What ToDo?</string>
-    <string name="new_category_hint">New Category?</string>
+    <string name="new_category_hint">New Category</string>
     <string name="category_text_view">List Category</string>
 
     <!-- What To Do -->
