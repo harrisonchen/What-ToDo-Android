@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="@string/add_todo_btn"
         android:id="@+id/add_todo_btn"
-        android:layout_below="@+id/new_category_edit_text"
+        android:layout_below="@+id/important_textview"
         android:layout_alignParentLeft="true" />
 
     <Spinner
@@ -52,8 +52,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/new_category_hint"
         android:id="@+id/new_category_edit_text"
-        android:layout_below="@+id/category_spinner"
         android:visibility="gone"
+        android:layout_below="@+id/category_spinner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
 
@@ -65,5 +65,23 @@
         android:id="@+id/category_text_view"
         android:layout_below="@+id/task_name_edit_text"
         android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/title_activity_important_task"
+        android:id="@+id/important_textview"
+        android:layout_below="@+id/new_category_edit_text"
+        android:layout_alignParentLeft="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/important_checkbox"
+        android:layout_alignBottom="@+id/important_textview"
+        android:layout_toRightOf="@+id/important_textview"
+        android:layout_alignTop="@+id/important_textview"
+        android:checked="false" />
 
 </RelativeLayout>

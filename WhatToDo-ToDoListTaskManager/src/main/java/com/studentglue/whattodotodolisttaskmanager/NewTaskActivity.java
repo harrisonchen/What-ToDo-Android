@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -32,9 +34,11 @@ public class NewTaskActivity extends ActionBarActivity {
     EditText new_category_edit_text;
     Spinner category_spinner;
     Button add_todo_btn;
+    CheckBox important_checkbox;
 
     boolean is_new_category;
     String list_id;
+    boolean important;
 
     ArrayList<HashMap<String, String>> list_entries;
 
@@ -54,9 +58,11 @@ public class NewTaskActivity extends ActionBarActivity {
         new_category_edit_text = (EditText) findViewById(R.id.new_category_edit_text);
         category_spinner = (Spinner) findViewById(R.id.category_spinner);
         add_todo_btn = (Button) findViewById(R.id.add_todo_btn);
+        important_checkbox = (CheckBox) findViewById(R.id.important_checkbox);
 
         is_new_category = false;
         list_id = "-1";
+        important = false;
 
         task_name_edit_text.requestFocus();
 
@@ -96,7 +102,12 @@ public class NewTaskActivity extends ActionBarActivity {
                         taskMap.put("taskName", taskName);
                         taskMap.put("list_id", dbtools.getListId(list_category));
 
-                        dbtools.addTaskWithList(taskMap);
+                        if(important) {
+                            dbtools.addImportantTaskWithList(taskMap);
+                        }
+                        else {
+                            dbtools.addTaskWithList(taskMap);
+                        }
 
                         setResult(RESULT_OK);
 
@@ -110,7 +121,12 @@ public class NewTaskActivity extends ActionBarActivity {
                         taskMap.put("taskName", taskName);
                         taskMap.put("list_id", list_id);
 
-                        dbtools.addTaskWithList(taskMap);
+                        if(important) {
+                            dbtools.addImportantTask(taskMap);
+                        }
+                        else {
+                            dbtools.addTaskWithList(taskMap);
+                        }
 
                         setResult(RESULT_OK);
 
@@ -148,6 +164,13 @@ public class NewTaskActivity extends ActionBarActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        important_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                important = b;
             }
         });
 

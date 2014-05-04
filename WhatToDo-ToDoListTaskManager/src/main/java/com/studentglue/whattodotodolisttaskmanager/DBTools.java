@@ -81,6 +81,21 @@ public class DBTools extends SQLiteOpenHelper {
         database.close();
     }
 
+    public void addImportantTaskWithList(HashMap<String, String> queryValues) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("name", queryValues.get("taskName"));
+        values.put("list_id", queryValues.get("list_id"));
+        values.put("importance", "1");
+
+        database.insert("task", null, values);
+
+        database.close();
+    }
+
     public int updateTask(HashMap<String, String> queryValues) {
 
         SQLiteDatabase database = this.getWritableDatabase();

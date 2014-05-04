@@ -31,6 +31,7 @@ public class ListActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
     private static final int UPDATE_LISTVIEW = 2;
+    private static final int NEW_TASK = 5;
 
     Button what_todo_btn;
 
@@ -150,6 +151,10 @@ public class ListActivity extends ActionBarActivity {
 
                     setAdapter();
 
+                }
+                else {
+                    Intent newTaskIntent = new Intent(getApplication(), NewTaskActivity.class);
+                    startActivityForResult(newTaskIntent, NEW_TASK);
                 }
             }
         });
