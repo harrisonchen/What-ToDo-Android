@@ -208,6 +208,10 @@ public class ImportantListActivity extends ActionBarActivity {
 
             setAdapter();
         }
+        else if (requestCode == NEW_TASK && resultCode == RESULT_OK) {
+
+            setAdapter();
+        }
         super.onActivityResult(requestCode, resultCode, data);
 
     }

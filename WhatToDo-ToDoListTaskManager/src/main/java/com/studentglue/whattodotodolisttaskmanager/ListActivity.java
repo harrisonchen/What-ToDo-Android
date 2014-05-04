@@ -253,6 +253,12 @@ public class ListActivity extends ActionBarActivity {
 
             setAdapter();
         }
+        else if (requestCode == NEW_TASK && resultCode == RESULT_OK) {
+
+            list_text_view.setText(list_name + " (" + dbtools.getTaskCountInList(list_id) + ")" );
+
+            setAdapter();
+        }
         super.onActivityResult(requestCode, resultCode, data);
 
     }
