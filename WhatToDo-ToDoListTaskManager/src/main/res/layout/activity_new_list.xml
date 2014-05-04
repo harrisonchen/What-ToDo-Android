@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:background="@drawable/what_todo_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -18,28 +19,18 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add_todo_edit_text"
+        android:id="@+id/add_list_edit_text"
         android:hint="@string/list_name_edit_text"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toLeftOf="@+id/add_todo_btn" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_todo_btn"
-        android:id="@+id/add_todo_btn"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/add_todo_edit_text" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/list_name_text_view"
-        android:id="@+id/textView"
-        android:layout_alignBaseline="@+id/add_todo_edit_text"
-        android:layout_alignBottom="@+id/add_todo_edit_text"
+        android:text="@string/add_list_btn"
+        android:id="@+id/add_list_btn"
+        android:layout_below="@+id/add_list_edit_text"
         android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

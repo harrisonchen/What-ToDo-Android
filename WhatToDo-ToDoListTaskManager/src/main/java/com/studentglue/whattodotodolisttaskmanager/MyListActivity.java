@@ -33,6 +33,7 @@ public class MyListActivity extends ActionBarActivity {
 
     private static final int REQUEST_CODE = 1234;
     private static final int GO_TO_LIST = 5;
+    private static final int NEW_LIST = 6;
 
     TextView listId;
     TextView listName;
@@ -114,6 +115,10 @@ public class MyListActivity extends ActionBarActivity {
                     setAdapter();
 
                 }
+                else {
+                    Intent newTaskIntent = new Intent(getApplication(), NewListActivity.class);
+                    startActivityForResult(newTaskIntent, NEW_LIST);
+                }
             }
         });
 
@@ -180,6 +185,10 @@ public class MyListActivity extends ActionBarActivity {
             }
         }
         else if (requestCode == GO_TO_LIST && resultCode == RESULT_OK) {
+
+            setAdapter();
+        }
+        else if (requestCode == NEW_LIST && resultCode == RESULT_OK) {
 
             setAdapter();
         }
