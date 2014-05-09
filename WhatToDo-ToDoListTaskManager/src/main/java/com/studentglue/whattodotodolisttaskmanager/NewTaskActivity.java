@@ -91,12 +91,14 @@ public class NewTaskActivity extends ActionBarActivity {
                 String list_category;
 
                 if(is_new_category) {
-                    list_category = new_category_edit_text.getText().toString();
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("category", list_category);
-                    dbtools.addList(map);
 
                     if(!taskName.equals("")) {
+
+                        list_category = new_category_edit_text.getText().toString();
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put("category", list_category);
+                        dbtools.addList(map);
+
                         HashMap<String, String> taskMap = new HashMap<String, String>();
 
                         taskMap.put("taskName", taskName);
